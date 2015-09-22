@@ -1,5 +1,3 @@
-let $ = require('jquery')
-
 let userAPI = {
   checkAuth: function(callback) {
     $.ajax('/auth', {

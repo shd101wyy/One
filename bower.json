@@ -1,0 +1,19 @@
+{
+  "name": "One",
+  "version": "0.0.0",
+  "homepage": "https://github.com/shd101wyy/One",
+  "authors": [
+    "Yiyi Wang <shd101wyy@sina.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
