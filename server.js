@@ -100,6 +100,10 @@ app.get('/logout', function(req, res) {
   res.send({success: true})
 })
 
+app.get('/images/:image_name', function(req, res) {
+  res.sendFile(__dirname + '/images/' + req.params.image_name)
+})
+
 http.listen(31000, function(){
   console.log('listening on *:31000')
 })

@@ -46,7 +46,12 @@ class App extends React.Component {
     return (
     <div className="app container">
       <div className="post-content">
-        <div className="other-post" dangerouslySetInnerHTML={{__html:marked(helpDoc)}}>
+        <div className="profile-pic">
+          <img src="images/help.jpg"/>
+        </div>
+        <div className="other-post">
+          <div className="other-post-content" dangerouslySetInnerHTML={{__html:marked(helpDoc)}}>
+        </div>
         </div>
       </div>
       <InputArea app={this}> </InputArea>
