@@ -5,13 +5,19 @@ import React from 'react'
 
 import './less/entry.less'
 
-import userAPI from './api/user_api.js'
-
 import {Signin, Signup, NoMatch} from './components/login_signup.jsx'
 import InputArea from './components/input_area.jsx'
 import PostContent from './components/post_content.jsx'
 
+import userAPI from './api/user_api.js'
+import profileApi from './api/profile_api.js'
+
 import helpDoc from './examples/help.js'
+
+window.global = {}
+let profileDoc = `
+### shd101wyy
+`
 
 /*
 React.render(
@@ -37,6 +43,8 @@ class App extends React.Component {
   componentDidMount() {
     userAPI.checkAuth((res)=> {
       if (res && res.success) {
+        console.log(res)
+        window.global.userId = res.userId
         this.setState({userLoggedIn: true})
       }
     })
@@ -57,7 +65,8 @@ class App extends React.Component {
       </div>
       */}
       <div className="posts">
-        <PostContent me={false} image="help.jpg" markdown={helpDoc}></PostContent>
+        {window.global.userId ?
+          <PostContent me={true} image={window.global.userId + '.jpg'} markdown={profileApi.generateProfileContent()}> </PostContent> : null }
         <PostContent me={false} image="help.jpg" markdown={helpDoc}></PostContent>
       </div>
       <InputArea app={this}> </InputArea>

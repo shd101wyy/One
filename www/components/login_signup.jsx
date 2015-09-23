@@ -79,6 +79,7 @@ export class Signin extends React.Component {
         password = this.state.password
     userAPI.signin(email, password, (res)=>{
       if (res && res.success) {
+        window.global.userId = res.userId
         this.props.app.setState({showSigninPanel: false, userLoggedIn: true})
       } else {
         alert('failed to sign in')
@@ -93,6 +94,7 @@ export class Signin extends React.Component {
         userId = this.state.userId
     userAPI.signup(email, password, userId, (res)=>{
       if (res && res.success) {
+        window.global.userId = userId
         this.props.app.setState({showSigninPanel: false, userLoggedIn: true})
       } else {
         alert('failed to sign up')

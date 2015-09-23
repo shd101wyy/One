@@ -49,7 +49,7 @@ app.get('/build/:filename', function(req, res) {
 
 app.get('/auth', function(req, res) {
   if (req.session.userId) {
-    res.json({success: true})
+    res.json({success: true, userId: req.session.userId})
   } else {
     res.send('null')
   }
@@ -69,8 +69,8 @@ app.post('/signin', function(req, res) {
       res.send('null')
     } else {
       console.log('signin successfully')
-      req.session.userId = '@id:' + post.email
-      res.json({success: true})
+      req.session.userId = users[0].userId
+      res.json({success: true, userId: users[0].userId})
     }
   })
 })
@@ -95,7 +95,7 @@ app.post('/signup', function(req, res) {
       res.send('null')
     } else {
       console.log('signup successfully')
-      req.session.userId = '@id:' + post.email
+      req.session.userId = userId
       res.json({success: true})
     }
   })
