@@ -8,6 +8,7 @@ import './less/entry.less'
 import {Signin, Signup, NoMatch} from './components/login_signup.jsx'
 import InputArea from './components/input_area.jsx'
 import PostContent from './components/post_content.jsx'
+import MarkdownEditor from './components/markdown_editor.jsx'
 
 import userAPI from './api/user_api.js'
 import profileApi from './api/profile_api.js'
@@ -36,14 +37,15 @@ class App extends React.Component {
     super(props)
     this.state = {
       showSigninPanel: false,
-      userLoggedIn: false
+      userLoggedIn: false,
+      showMarkdownEditor: true,
+      posts: []
     }
   }
 
   componentDidMount() {
     userAPI.checkAuth((res)=> {
       if (res && res.success) {
-        console.log(res)
         window.global.userId = res.userId
         this.setState({userLoggedIn: true})
       }
@@ -51,6 +53,11 @@ class App extends React.Component {
   }
 
   render() {
+    let posts = []
+    for(var i = this.state.posts.length - 1; i >=0; i--) {
+      posts.push(<PostContent postData={this.state.posts[i]}></PostContent>)
+    }
+
     return (
     <div className="app container">
     {/*
@@ -65,14 +72,38 @@ class App extends React.Component {
       </div>
       */}
       <div className="posts">
-        {window.global.userId ?
-          <PostContent me={true} image={window.global.userId + '.jpg'} markdown={profileApi.generateProfileContent()}> </PostContent> : null }
-        <PostContent me={false} image="help.jpg" markdown={helpDoc}></PostContent>
+        {posts}
       </div>
+
       <InputArea app={this}> </InputArea>
-      {this.state.showSigninPanel ? <Signin app={this}/> : null}
+
+      {this.state.showSigninPanel ? <Signin app={this} /> : null}
+
+      {this.state.showMarkdownEditor ? <MarkdownEditor app={this} /> : null}
     </div>
     )
+  }
+
+  // add self profile
+  showSelfProfile() {
+    let posts = this.state.posts
+    posts.push({
+      me: true,
+      image: window.global.userId + '.jpg',
+      markdown: profileApi.generateProfileContent()
+    })
+    this.forceUpdate()
+  }
+
+  // show helps
+  showHelps() {
+    let posts = this.state.posts
+    posts.push({
+      me: false,
+      image: 'help.jpg',
+      markdown: helpDoc
+    })
+    this.forceUpdate()
   }
 }
 

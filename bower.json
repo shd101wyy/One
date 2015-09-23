@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.5",
+    "codemirror": "~5.7.0",
     "font-awesome": "~4.4.0",
     "identicon.js": "identicon#*"
   }

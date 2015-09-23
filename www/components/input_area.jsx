@@ -37,6 +37,7 @@ export default class InputArea extends React.Component {
       this.setState({message: '', placeholder: 'enter your message here.'})
 
       if (message === '#help') {
+        this.props.app.showHelps()
 
       } else if (message === '#logout') {
         userAPI.logout((res)=> {
@@ -46,6 +47,8 @@ export default class InputArea extends React.Component {
             alert('failed to logout')
           }
         })
+      } else if (message === '#me') {
+        this.props.app.showSelfProfile()
       }
     }
   }

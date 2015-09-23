@@ -6,25 +6,28 @@ export default class PostContent extends React.Component {
     super(props)
 
     this.state = {
-      imageSrc: 'images/' + this.props.image
+      imageSrc: 'images/' + this.props.postData.image
     }
   }
 
   componentDidMount() {
     let img = new Image()
     img.onerror = ()=> {
+      console.log('ERROR')
+
       // use identicon to generate unique icons for profile img
       let data = new Identicon(window.global.userId, 64).toString()
       this.setState({imageSrc: 'data:image/png;base64,' + data})
     }
     img.src = this.state.imageSrc
+    console.log('ENTER HERE', this.props.postData)
   }
 
   render() {
-    let me = this.props.me,
-        profileImage = this.props.image,
-        markdownString = this.props.markdown,
-        htmlContent = this.props.htmlContent
+    let postData = this.props.postData,
+        me = postData.me,
+        markdownString = postData.markdown,
+        htmlContent = postData.htmlContent
     return (
       <div className="post-content">
         <div className={'profile-pic ' + (me ? 'me' : '')}>
@@ -47,8 +50,9 @@ export default class PostContent extends React.Component {
 }
 
 PostContent.propTypes = {
-  me: React.PropTypes.bool,  // whether it is me that post this message,
-  image: React.PropTypes.string,  // profile image of that user
-  markdown: React.PropTypes.string,
+  //me: React.PropTypes.bool,  // whether it is me that post this message,
+  //image: React.PropTypes.string,  // profile image of that user
+  //markdown: React.PropTypes.string,
   // htmlContent: React.PropTypes.html
+  postData: React.PropTypes.object
 }
