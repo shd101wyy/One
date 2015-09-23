@@ -5,6 +5,7 @@ let express = require('express')
 let app = express()
 let http = require('http').Server(app)
 let session = require('express-session')
+let bodyParser = require('body-parser')
 
 let hour = 3600000
 app.use(session({
@@ -20,6 +21,8 @@ function checkAuth(req, res, next) {
   }
 }
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/www'));
 
 app.get('/', function(req, res){
@@ -55,6 +58,17 @@ app.post('/login', function(req, res) {
     // session saved already
     res.send('login-success')
   }
+})
+
+app.post('/signin', function(req, res) {
+  let post = req.body
+  console.log('signin', post)
+  console.log(req.body.email)
+})
+
+app.post('/signup', function(req, res) {
+  let post = req.body
+  console.log('signup', post)
 })
 
 app.get('/logout', function(req, res) {

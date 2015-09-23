@@ -6,19 +6,48 @@ let userAPI = {
       success: function(res) {
         console.log('auth success', res)
         if (res) {
-          if (res) callback(res)
+          if (callback) callback(res)
           else callback(null)
         }
       },
       error: function(res) {
-        console.log('auth error', res)
         if (callback) callback(null)
       }
     })
   },
 
-  login: function() {
+  signin: function(email, password, callback) {
+    $.ajax('/signin', {
+      type: 'POST',
+      dataType: 'json',
+      data: {email, password},
+      success: function(res) {
+        if (res) {
+          if (callback) callback(res)
+          else callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(null)
+      }
+    })
+  },
 
+  signup: function(email, password, callback) {
+    $.ajax('/signup', {
+      type: 'POST',
+      dataType: 'json',
+      data: {email, password},
+      success: function(res) {
+        if (res) {
+          if (callback) callback(res)
+          else callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(null)
+      }
+    })
   },
 
   logout: function() {
