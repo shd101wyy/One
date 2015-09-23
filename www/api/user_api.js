@@ -52,8 +52,20 @@ let userAPI = {
     })
   },
 
-  logout: function() {
-
+  logout: function(callback) {
+    $.ajax('/logout', {
+      type: 'GET',
+      dataType: 'json',
+      success: function(res) {
+        if (res) {
+          if (callback) callback(res)
+          else callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(null)
+      }
+    })
   }
 }
 

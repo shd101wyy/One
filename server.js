@@ -97,7 +97,7 @@ app.post('/signup', function(req, res) {
 
 app.get('/logout', function(req, res) {
   delete(req.session.userId)
-  res.send('logout-succss')
+  res.send({success: true})
 })
 
 http.listen(31000, function(){
