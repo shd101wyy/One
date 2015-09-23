@@ -1,7 +1,8 @@
 "use strict"
 
 import React from 'react'
-import {Router, Route} from 'react-router'
+// import {Router, Route} from 'react-router'
+let marked = require('marked')
 
 import './less/entry.less'
 
@@ -9,6 +10,8 @@ import userAPI from './api/user_api.js'
 
 import {Signin, Signup, NoMatch} from './components/login_signup.jsx'
 import InputArea from './components/input_area.jsx'
+
+import helpDoc from './examples/help.js'
 
 /*
 React.render(
@@ -41,7 +44,11 @@ class App extends React.Component {
 
   render() {
     return (
-    <div className="app">
+    <div className="app container">
+      <div className="post-content">
+        <div className="other-post" dangerouslySetInnerHTML={{__html:marked(helpDoc)}}>
+        </div>
+      </div>
       <InputArea app={this}> </InputArea>
       {this.state.showSigninPanel ? <Signin app={this}/> : null}
     </div>

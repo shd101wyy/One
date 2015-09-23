@@ -7,7 +7,7 @@ export default class InputArea extends React.Component {
     super(props)
 
     this.state = {
-      message: ''
+      message: '#help'
     }
   }
 
@@ -15,7 +15,7 @@ export default class InputArea extends React.Component {
     let userLoggedIn = this.props.app.state.userLoggedIn
     return (
     <div className="input-area">
-      <input type="text" placeholder={ userLoggedIn ? "enter your message here." : ""} disabled={!userLoggedIn} value={this.state.message} onChange={this.inputMessage.bind(this)}
+      <input type="text" placeholder={ userLoggedIn ? "enter your message here." : ""} disabled={!userLoggedIn} value={userLoggedIn ? this.state.message : ''} onChange={this.inputMessage.bind(this)}
       onKeyDown = {this.checkKeyDown.bind(this)} />
       {userLoggedIn ?
         null:
