@@ -94,11 +94,23 @@
 
 	    _get(Object.getPrototypeOf(App.prototype), 'constructor', this).call(this, props);
 	    this.state = {
-	      showSigninPanel: false
+	      showSigninPanel: false,
+	      userLoggedIn: false
 	    };
 	  }
 
 	  _createClass(App, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this = this;
+
+	      _apiUser_apiJs2['default'].checkAuth(function (res) {
+	        if (res && res.success) {
+	          _this.setState({ userLoggedIn: true });
+	        }
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -24673,11 +24685,13 @@
 	      dataType: 'json',
 	      data: { email: email, password: password },
 	      success: function success(res) {
+	        console.log('here', res);
 	        if (res) {
 	          if (callback) callback(res);else callback(null);
 	        }
 	      },
 	      error: function error(res) {
+	        console.log('here2', res);
 	        if (callback) callback(null);
 	      }
 	    });
@@ -24830,21 +24844,33 @@
 	  }, {
 	    key: 'signin',
 	    value: function signin(e) {
+	      var _this = this;
+
 	      e.preventDefault();
 	      var email = this.state.email,
 	          password = this.state.password;
 	      _apiUser_apiJs2['default'].signin(email, password, function (res) {
-	        console.log('signin', res);
+	        if (res && res.success) {
+	          _this.props.app.setState({ showSigninPanel: false, userLoggedIn: true });
+	        } else {
+	          alert('failed to sign in');
+	        }
 	      });
 	    }
 	  }, {
 	    key: 'signup',
 	    value: function signup(e) {
+	      var _this2 = this;
+
 	      e.preventDefault();
 	      var email = this.state.email,
 	          password = this.state.password;
 	      _apiUser_apiJs2['default'].signup(email, password, function (res) {
-	        console.log('signup', res);
+	        if (res && res.success) {
+	          _this2.props.app.setState({ showSigninPanel: false, userLoggedIn: true });
+	        } else {
+	          alert('failed to sign up');
+	        }
 	      });
 	    }
 	  }]);
@@ -24892,20 +24918,17 @@
 	    _classCallCheck(this, InputArea);
 
 	    _get(Object.getPrototypeOf(InputArea.prototype), "constructor", this).call(this, props);
-
-	    this.state = {
-	      userLoggedIn: false
-	    };
 	  }
 
 	  _createClass(InputArea, [{
 	    key: "render",
 	    value: function render() {
+	      var userLoggedIn = this.props.app.state.userLoggedIn;
 	      return _react2["default"].createElement(
 	        "div",
 	        { className: "input-area" },
-	        _react2["default"].createElement("input", { type: "text", placeholder: this.state.userLoggedIn ? "enter your message here." : "", disabled: !this.state.userLoggedIn }),
-	        this.state.userLoggedIn ? null : _react2["default"].createElement(
+	        _react2["default"].createElement("input", { type: "text", placeholder: userLoggedIn ? "enter your message here." : "", disabled: !userLoggedIn }),
+	        userLoggedIn ? null : _react2["default"].createElement(
 	          "span",
 	          { className: "signin-hint" },
 	          " you are not logged in yet. ",

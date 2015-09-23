@@ -26,8 +26,17 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showSigninPanel: false
+      showSigninPanel: false,
+      userLoggedIn: false
     }
+  }
+
+  componentDidMount() {
+    userAPI.checkAuth((res)=> {
+      if (res && res.success) {
+        this.setState({userLoggedIn: true})
+      }
+    })
   }
 
   render() {

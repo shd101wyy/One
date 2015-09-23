@@ -22,12 +22,14 @@ let userAPI = {
       dataType: 'json',
       data: {email, password},
       success: function(res) {
+        console.log('here', res)
         if (res) {
           if (callback) callback(res)
           else callback(null)
         }
       },
       error: function(res) {
+        console.log('here2', res)
         if (callback) callback(null)
       }
     })

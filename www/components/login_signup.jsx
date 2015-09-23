@@ -69,7 +69,11 @@ export class Signin extends React.Component {
     let email = this.state.email,
         password = this.state.password
     userAPI.signin(email, password, (res)=>{
-      console.log('signin', res)
+      if (res && res.success) {
+        this.props.app.setState({showSigninPanel: false, userLoggedIn: true})
+      } else {
+        alert('failed to sign in')
+      }
     })
   }
 
@@ -78,7 +82,11 @@ export class Signin extends React.Component {
     let email = this.state.email,
         password = this.state.password
     userAPI.signup(email, password, (res)=>{
-      console.log('signup', res)
+      if (res && res.success) {
+        this.props.app.setState({showSigninPanel: false, userLoggedIn: true})
+      } else {
+        alert('failed to sign up')
+      }
     })
   }
 }

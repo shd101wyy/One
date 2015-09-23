@@ -37,6 +37,7 @@
 ```
 npm install
 bower install
+sudo mongod
 npm test
 ```
 ---

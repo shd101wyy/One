@@ -7,19 +7,29 @@ let http = require('http').Server(app)
 let session = require('express-session')
 let bodyParser = require('body-parser')
 
-let hour = 3600000
+
+/**
+ * Encrypt string
+ */
+let crypto = require('crypto'),
+    algorithm = 'aes-256-ctr'
+function encrypt(text){
+  var cipher = crypto.createCipher(algorithm, "asdfnjksaQW");
+  var crypted = cipher.update(text,'utf8','hex');
+  crypted += cipher.final('hex');
+  return crypted;
+}
+
+
+/**
+ * Database Schema
+ */
+let db_User = require("./schema/user.js") // require database User model.
+
+
 app.use(session({
   secret: '1234567890QWERTY',
 }))
-
-function checkAuth(req, res, next) {
-  // req.session.user_id = "this is my userid"
-  if (!req.session.userId) {
-    res.send('You are not authorized to view this page')
-  } else {
-    next()
-  }
-}
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -39,36 +49,50 @@ app.get('/build/:filename', function(req, res) {
 
 app.get('/auth', function(req, res) {
   if (req.session.userId) {
-    res.send(userId)
+    res.json({success: true})
   } else {
     res.send('null')
   }
 })
 
-app.post('/login', function(req, res) {
-  let post = req.body
-  if (!post.session.userId) {
-    if (post.email === 'shd101wyy' && post.password === '123') {
-      req.session.userId = '@id:' + post.email
-      req.send('login-success')
-    } else {
-      res.send('login-error')
-    }
-  } else {
-    // session saved already
-    res.send('login-success')
-  }
-})
-
 app.post('/signin', function(req, res) {
-  let post = req.body
-  console.log('signin', post)
-  console.log(req.body.email)
+  console.log(req.session.userId)
+  let post = req.body,
+      email = post.email,
+      password = post.password
+  db_User.find({email, password}, function(error, users) {
+    if (error || !users || users.length === 0) {
+      console.log('signin error')
+      res.send('null')
+    } else {
+      console.log('signin successfully')
+      req.session.userId = '@id:' + post.email
+      res.json({success: true})
+    }
+  })
 })
 
 app.post('/signup', function(req, res) {
-  let post = req.body
-  console.log('signup', post)
+  let post = req.body,
+      email = post.email,
+      password = post.password
+
+  let newUser = db_User({
+    email,
+    password
+  })
+
+  newUser.save(function(error) {
+    if (error) {
+      console.log('signup error', error)
+      res.send('null')
+    } else {
+      console.log('signup successfully')
+      req.session.userId = '@id:' + post.email
+      res.json({success: true})
+    }
+  })
+
 })
 
 app.get('/logout', function(req, res) {
