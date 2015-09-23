@@ -18,7 +18,7 @@ export default class InputArea extends React.Component {
       <input type="text" placeholder={ userLoggedIn ? "enter your message here." : ""} disabled={!userLoggedIn} value={userLoggedIn ? this.state.message : ''} onChange={this.inputMessage.bind(this)}
       onKeyDown = {this.checkKeyDown.bind(this)} />
       {userLoggedIn ?
-        null:
+        <span className="signin-hint"></span>:
         <span className="signin-hint"> you are not logged in yet. <a onClick={this.showLoginPanel.bind(this)}> click me </a> to sign in </span>}
     </div> )
   }

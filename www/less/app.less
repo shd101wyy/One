@@ -25,15 +25,20 @@ html, body {
   }
 
   .profile-pic {
-    width: 64px;
+    width: 100%;
     height: 64px;
     position: absolute;
     top: 30px;
     left: 0;
+    padding-left: calc(~"50% - 350px");
 
     &.me {
       right: 0;
       left: inherit;
+
+      img {
+        margin-left: 640px;
+      }
     }
 
     img {
