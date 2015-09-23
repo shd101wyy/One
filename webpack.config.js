@@ -7,7 +7,7 @@ module.exports = {
 	},
 	module: {
 		loaders: [
-			 { test: /\.(js|jsx)$/, include: [path.resolve(__dirname, 'www')], exclude: [/lib/, /node_modules/], loader: 'babel' },
+			 { test: /\.(js|jsx)$/, include: [path.resolve(__dirname, 'www')], exclude: [/node_modules/], loader: 'babel' },
        { test: /\.html$/, loader: 'raw' },
 			 { test: /\.less$/, loader: 'style!css!less' },
 			 { test: /\.css$/, loader: 'style!css' }
