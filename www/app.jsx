@@ -2,7 +2,6 @@
 
 import React from 'react'
 // import {Router, Route} from 'react-router'
-let marked = require('marked')
 
 import './less/entry.less'
 
@@ -10,6 +9,7 @@ import userAPI from './api/user_api.js'
 
 import {Signin, Signup, NoMatch} from './components/login_signup.jsx'
 import InputArea from './components/input_area.jsx'
+import PostContent from './components/post_content.jsx'
 
 import helpDoc from './examples/help.js'
 
@@ -45,6 +45,7 @@ class App extends React.Component {
   render() {
     return (
     <div className="app container">
+    {/*
       <div className="post-content">
         <div className="profile-pic">
           <img src="images/help.jpg"/>
@@ -54,6 +55,8 @@ class App extends React.Component {
         </div>
         </div>
       </div>
+      */}
+      <PostContent me={false} image="help.jpg" markdown={helpDoc}></PostContent>
       <InputArea app={this}> </InputArea>
       {this.state.showSigninPanel ? <Signin app={this}/> : null}
     </div>

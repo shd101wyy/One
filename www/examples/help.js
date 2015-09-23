@@ -28,6 +28,11 @@ You can also tag friends in your message.
   * of course you can also tag multiple friends.
   * if you tag friends without including the <code>#</code> topic, then your conversation will be private and not shown to public.
 
+### 一些想法
+---
+我想在页面的左边加上实时的热门 topic 。
+我想在页面的右边加上 好友列表 以方便聊天。 
+
 ### Who made this
 ---
 This website is initially designed and programmed by **Yiyi Wang** (shd101wyy) from University of Illinois at Urbana Champaign. He made this website right before the midterm as he was feeling extremely unhappy and he didn't want to do anything else except coding.

@@ -74,6 +74,10 @@
 
 	var _componentsInput_areaJsx2 = _interopRequireDefault(_componentsInput_areaJsx);
 
+	var _componentsPost_contentJsx = __webpack_require__(211);
+
+	var _componentsPost_contentJsx2 = _interopRequireDefault(_componentsPost_contentJsx);
+
 	var _examplesHelpJs = __webpack_require__(209);
 
 	var _examplesHelpJs2 = _interopRequireDefault(_examplesHelpJs);
@@ -89,8 +93,6 @@
 	  </Router>
 	, document.body)
 	*/
-
-	var marked = __webpack_require__(210);
 
 	var App = (function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -122,20 +124,7 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'app container' },
-	        _react2['default'].createElement(
-	          'div',
-	          { className: 'post-content' },
-	          _react2['default'].createElement(
-	            'div',
-	            { className: 'profile-pic' },
-	            _react2['default'].createElement('img', { src: 'images/help.jpg' })
-	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            { className: 'other-post' },
-	            _react2['default'].createElement('div', { className: 'other-post-content', dangerouslySetInnerHTML: { __html: marked(_examplesHelpJs2['default']) } })
-	          )
-	        ),
+	        _react2['default'].createElement(_componentsPost_contentJsx2['default'], { me: false, image: 'help.jpg', markdown: _examplesHelpJs2['default'] }),
 	        _react2['default'].createElement(
 	          _componentsInput_areaJsx2['default'],
 	          { app: this },
@@ -150,6 +139,17 @@
 	})(_react2['default'].Component);
 
 	_react2['default'].render(_react2['default'].createElement(App, null), document.body);
+	/*
+	 <div className="post-content">
+	   <div className="profile-pic">
+	     <img src="images/help.jpg"/>
+	   </div>
+	   <div className="other-post">
+	     <div className="other-post-content" dangerouslySetInnerHTML={{__html:marked(helpDoc)}}>
+	   </div>
+	   </div>
+	 </div>
+	 */
 
 /***/ },
 /* 1 */,
@@ -25033,7 +25033,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var helpDoc = "\n### This is the introduction of this website\n#### This website is still under development, for more information, have a look at  [github](https://github.com/shd101wyy/One).\n---\n  * Here are some very basic instructions.\n    * <code> #help </code> - to get helps(the page you are reading now)\n    * <code> #logout </code> - to logout your account\n\n### How to use this website\n---\nThis website is designed as a social app based on topics.\nEvery message you post will have a topic.\nAnd here are several public topics you can use as a try.\n  * to search a topic, simply type <code>#</code> and topic name, for example\n    * <code>#help</code> will get all posts related to <code>#help</code> topic.\n    * <code>#all</code> will get all posts on this website ordered by post time.\n  * if you want to post a message to <code>#all</code> topic, simplely include <code>#all</code> in your message.\n    * for example <code>#all Today's weather is super good</code> will post this message to <code>#all</code> topic.\n    * for example <code>I like playing #dota2, anyone else wants to play with me tonight </code> will post this message to <code>#dota2</code> topic.\n  * if you didn't include any <code>#</code> topic, what you post will be sent to <code>#your-id</code> topic.\n  * 未来考虑加上类似 微信 的群组功能。\n\nYou can also tag friends in your message.\n  * to search a friend, simply type <code>@your-friend-id</code>, for exmaple\n    * <code>@raphael</code> will search for user with id <code>raphael</code> and you can choose to follow him.\n  * to tag a friend, simply type <code>@your-friend-id</code>, for example\n    * <code>@raphael you are so handsome</code> will send this message to <code>@raphael</code> and raphael will receive this message in his main page at real time.\n  * of course you can also tag multiple friends.\n  * if you tag friends without including the <code>#</code> topic, then your conversation will be private and not shown to public.\n\n### Who made this\n---\nThis website is initially designed and programmed by **Yiyi Wang** (shd101wyy) from University of Illinois at Urbana Champaign. He made this website right before the midterm as he was feeling extremely unhappy and he didn't want to do anything else except coding.\nSo he locked his door and began to make this website on September 22nd 2015 at 5:12 pm\n";
+	var helpDoc = "\n### This is the introduction of this website\n#### This website is still under development, for more information, have a look at  [github](https://github.com/shd101wyy/One).\n---\n  * Here are some very basic instructions.\n    * <code> #help </code> - to get helps(the page you are reading now)\n    * <code> #logout </code> - to logout your account\n\n### How to use this website\n---\nThis website is designed as a social app based on topics.\nEvery message you post will have a topic.\nAnd here are several public topics you can use as a try.\n  * to search a topic, simply type <code>#</code> and topic name, for example\n    * <code>#help</code> will get all posts related to <code>#help</code> topic.\n    * <code>#all</code> will get all posts on this website ordered by post time.\n  * if you want to post a message to <code>#all</code> topic, simplely include <code>#all</code> in your message.\n    * for example <code>#all Today's weather is super good</code> will post this message to <code>#all</code> topic.\n    * for example <code>I like playing #dota2, anyone else wants to play with me tonight </code> will post this message to <code>#dota2</code> topic.\n  * if you didn't include any <code>#</code> topic, what you post will be sent to <code>#your-id</code> topic.\n  * 未来考虑加上类似 微信 的群组功能。\n\nYou can also tag friends in your message.\n  * to search a friend, simply type <code>@your-friend-id</code>, for exmaple\n    * <code>@raphael</code> will search for user with id <code>raphael</code> and you can choose to follow him.\n  * to tag a friend, simply type <code>@your-friend-id</code>, for example\n    * <code>@raphael you are so handsome</code> will send this message to <code>@raphael</code> and raphael will receive this message in his main page at real time.\n  * of course you can also tag multiple friends.\n  * if you tag friends without including the <code>#</code> topic, then your conversation will be private and not shown to public.\n\n### 一些想法\n---\n我想在页面的左边加上实时的热门 topic 。\n我想在页面的右边加上 好友列表 以方便聊天。 \n\n### Who made this\n---\nThis website is initially designed and programmed by **Yiyi Wang** (shd101wyy) from University of Illinois at Urbana Champaign. He made this website right before the midterm as he was feeling extremely unhappy and he didn't want to do anything else except coding.\nSo he locked his door and began to make this website on September 22nd 2015 at 5:12 pm\n";
 
 	exports["default"] = helpDoc;
 	module.exports = exports["default"];
@@ -26329,6 +26329,78 @@
 	}());
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var marked = __webpack_require__(210);
+
+	var PostContent = (function (_React$Component) {
+	  _inherits(PostContent, _React$Component);
+
+	  function PostContent(props) {
+	    _classCallCheck(this, PostContent);
+
+	    _get(Object.getPrototypeOf(PostContent.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(PostContent, [{
+	    key: 'render',
+	    value: function render() {
+	      var me = this.props.me,
+	          profileImage = this.props.image,
+	          markdownString = this.props.markdown,
+	          html = this.props.html;
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'post-content' },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'profile-pic ' + (me ? 'me' : '') },
+	          _react2['default'].createElement('img', { src: 'images/' + profileImage })
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'other-post' },
+	          _react2['default'].createElement('div', { className: 'other-post-content', dangerouslySetInnerHTML: { __html: marked(markdownString) } })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return PostContent;
+	})(_react2['default'].Component);
+
+	exports['default'] = PostContent;
+
+	PostContent.propTypes = {
+	  me: _react2['default'].PropTypes.bool, // whether it is me that post this message,
+	  image: _react2['default'].PropTypes.string, // profile image of that user
+	  markdown: _react2['default'].PropTypes.string,
+	  html: _react2['default'].PropTypes.html
+	};
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);
