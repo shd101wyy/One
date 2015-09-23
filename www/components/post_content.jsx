@@ -4,6 +4,20 @@ let marked = require('marked')
 export default class PostContent extends React.Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      imageSrc: 'images/' + this.props.image
+    }
+  }
+
+  componentDidMount() {
+    let img = new Image()
+    img.onerror = ()=> {
+      // use identicon to generate unique icons for profile img
+      let data = new Identicon(window.global.userId, 64).toString()
+      this.setState({imageSrc: 'data:image/png;base64,' + data})
+    }
+    img.src = this.state.imageSrc
   }
 
   render() {
@@ -14,7 +28,7 @@ export default class PostContent extends React.Component {
     return (
       <div className="post-content">
         <div className={'profile-pic ' + (me ? 'me' : '')}>
-          <img src={'images/' + profileImage}/>
+          <img src={this.state.imageSrc}/>
           {me ?
             <i className="fa fa-pencil-square-o" onClick={this.editPostContent.bind(this)}></i>
           : null}

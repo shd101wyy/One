@@ -25103,9 +25103,26 @@
 	    _classCallCheck(this, PostContent);
 
 	    _get(Object.getPrototypeOf(PostContent.prototype), 'constructor', this).call(this, props);
+
+	    this.state = {
+	      imageSrc: 'images/' + this.props.image
+	    };
 	  }
 
 	  _createClass(PostContent, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this = this;
+
+	      var img = new Image();
+	      img.onerror = function () {
+	        // use identicon to generate unique icons for profile img
+	        var data = new Identicon(window.global.userId, 64).toString();
+	        _this.setState({ imageSrc: 'data:image/png;base64,' + data });
+	      };
+	      img.src = this.state.imageSrc;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var me = this.props.me,
@@ -25118,7 +25135,7 @@
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'profile-pic ' + (me ? 'me' : '') },
-	          _react2['default'].createElement('img', { src: 'images/' + profileImage }),
+	          _react2['default'].createElement('img', { src: this.state.imageSrc }),
 	          me ? _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o', onClick: this.editPostContent.bind(this) }) : null
 	        ),
 	        _react2['default'].createElement(
