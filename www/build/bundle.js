@@ -20583,7 +20583,7 @@
 
 
 	// module
-	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\n.app {\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 64px;\n  position: absolute;\n  top: 6px;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img {\n  margin-left: 640px;\n}\n.post-content .profile-pic img {\n  width: 64px;\n  height: 64px;\n  border-radius: 6px;\n}\n.post-content .other-post-content {\n  width: 500px;\n  min-height: 200px;\n  padding: 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  border: 1px solid #ABABAB;\n  padding: 30px;\n  border-radius: 6px;\n  margin: 0 auto;\n  margin-top: -10px;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\n.app {\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 6px;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 640px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 64px;\n  height: 64px;\n  border-radius: 6px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  width: 500px;\n  min-height: 200px;\n  padding: 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  border: 1px solid #ABABAB;\n  padding: 30px;\n  border-radius: 6px;\n  margin: 0 auto;\n  margin-top: -10px;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n", ""]);
 
 	// exports
 
@@ -25118,7 +25118,8 @@
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'profile-pic ' + (me ? 'me' : '') },
-	          _react2['default'].createElement('img', { src: 'images/' + profileImage })
+	          _react2['default'].createElement('img', { src: 'images/' + profileImage }),
+	          me ? _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o', onClick: this.editPostContent.bind(this) }) : null
 	        ),
 	        _react2['default'].createElement(
 	          'div',
@@ -25126,6 +25127,11 @@
 	          _react2['default'].createElement('div', { className: 'other-post-content', dangerouslySetInnerHTML: { __html: marked(markdownString) } })
 	        )
 	      );
+	    }
+	  }, {
+	    key: 'editPostContent',
+	    value: function editPostContent() {
+	      alert('Edit is not implemented yet');
 	    }
 	  }]);
 
@@ -26460,7 +26466,7 @@
 	var profileApi = {
 	  generateProfileContent: function generateProfileContent() {
 	    var userId = window.global.userId;
-	    return "\n## " + userId + "\n---\nHello **" + userId + "**, this is your profile card.\n";
+	    return "\n## " + userId + " (<code>#me</code>)\n---\n* Hello **" + userId + "**, this is your profile card.\n* You can click the **pencil icon** on the right side below your profile picture to edit this profile card.\n";
 	  }
 	};
 

@@ -3,9 +3,10 @@ let profileApi = {
     let userId = window.global.userId
     return (
 `
-## ${userId}
+## ${userId} (<code>#me</code>)
 ---
-Hello **${userId}**, this is your profile card.
+* Hello **${userId}**, this is your profile card.
+* You can click the **pencil icon** on the right side below your profile picture to edit this profile card.
 `)
   }
 }

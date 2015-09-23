@@ -15,6 +15,9 @@ export default class PostContent extends React.Component {
       <div className="post-content">
         <div className={'profile-pic ' + (me ? 'me' : '')}>
           <img src={'images/' + profileImage}/>
+          {me ?
+            <i className="fa fa-pencil-square-o" onClick={this.editPostContent.bind(this)}></i>
+          : null}
         </div>
         <div className="other-post">
           <div className="other-post-content" dangerouslySetInnerHTML={{__html:marked(markdownString)}}>
@@ -22,6 +25,10 @@ export default class PostContent extends React.Component {
         </div>
       </div>
     )
+  }
+
+  editPostContent() {
+    alert('Edit is not implemented yet')
   }
 }
 
