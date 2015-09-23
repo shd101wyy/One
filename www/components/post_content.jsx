@@ -10,7 +10,7 @@ export default class PostContent extends React.Component {
     let me = this.props.me,
         profileImage = this.props.image,
         markdownString = this.props.markdown,
-        html = this.props.html
+        htmlContent = this.props.htmlContent
     return (
       <div className="post-content">
         <div className={'profile-pic ' + (me ? 'me' : '')}>
@@ -29,5 +29,5 @@ PostContent.propTypes = {
   me: React.PropTypes.bool,  // whether it is me that post this message,
   image: React.PropTypes.string,  // profile image of that user
   markdown: React.PropTypes.string,
-  html: React.PropTypes.html
+  // htmlContent: React.PropTypes.html
 }

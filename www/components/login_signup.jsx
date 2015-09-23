@@ -10,7 +10,8 @@ export class Signin extends React.Component {
     this.state = {
       signin: true,
       email: '',
-      password: ''
+      password: '',
+      userId: ''
     }
   }
 
@@ -22,7 +23,7 @@ export class Signin extends React.Component {
     let signin = this.state.signin
 
     return (
-      <div className="signin">
+      <div className={"signin " + (signin? '' : 'taller')} >
         <div className="signin-panel">
           <form>
             <h2 className="form-heading">{signin ? 'Please sign in' : 'Please sign up'}</h2>
@@ -39,6 +40,10 @@ export class Signin extends React.Component {
               </label>
             </div>
             */}
+            { signin ? null : <label htmlFor="inputUserId" className="sr-only">Email  address</label> }
+            { signin ? null : <input type="email" id="inputUserId" className="form-control" placeholder="User Id (Unique one)" required="" autofocus="" onChange={this.inputUserId.bind(this)} />
+            }
+
           <button className="btn btn-lg btn-primary btn-block" onClick={signin ? this.signin.bind(this) : this.signup.bind(this)}>{signin ? 'Sign in' : 'Sign up'}</button>
           </form>
           <a className="switch-panel-btn" onClick={this.toggleSignin.bind(this)}> {signin ? '没有账号? 点击我进行注册' : '已经有账号了? 点击我进行登入'} </a>
@@ -64,6 +69,10 @@ export class Signin extends React.Component {
     this.setState({password: e.target.value})
   }
 
+  inputUserId(e) {
+    this.setState({userId: e.target.value})
+  }
+
   signin(e) {
     e.preventDefault()
     let email = this.state.email,
@@ -80,8 +89,9 @@ export class Signin extends React.Component {
   signup(e) {
     e.preventDefault()
     let email = this.state.email,
-        password = this.state.password
-    userAPI.signup(email, password, (res)=>{
+        password = this.state.password,
+        userId = this.state.userId
+    userAPI.signup(email, password, userId, (res)=>{
       if (res && res.success) {
         this.props.app.setState({showSigninPanel: false, userLoggedIn: true})
       } else {

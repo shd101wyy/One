@@ -7,7 +7,8 @@ export default class InputArea extends React.Component {
     super(props)
 
     this.state = {
-      message: '#help'
+      message: '',
+      placeholder: 'type #help to get helps'
     }
   }
 
@@ -15,8 +16,9 @@ export default class InputArea extends React.Component {
     let userLoggedIn = this.props.app.state.userLoggedIn
     return (
     <div className="input-area">
-      <input type="text" placeholder={ userLoggedIn ? "enter your message here." : ""} disabled={!userLoggedIn} value={userLoggedIn ? this.state.message : ''} onChange={this.inputMessage.bind(this)}
-      onKeyDown = {this.checkKeyDown.bind(this)} />
+      <input type="text" placeholder={ userLoggedIn ? this.state.placeholder : ""} disabled={!userLoggedIn} value={userLoggedIn ? this.state.message : ''} onChange={this.inputMessage.bind(this)}
+      onKeyDown = {this.checkKeyDown.bind(this)}
+      onClick={this.changePlaceholder.bind(this)} />
       {userLoggedIn ?
         <span className="signin-hint"></span>:
         <span className="signin-hint"> you are not logged in yet. <a onClick={this.showLoginPanel.bind(this)}> click me </a> to sign in </span>}
@@ -32,7 +34,7 @@ export default class InputArea extends React.Component {
     // # => 51
     if (e.keyCode === 13) { // press enter key
       let message = this.state.message.trim()
-      this.setState({message: ''})
+      this.setState({message: '', placeholder: 'enter your message here.'})
 
       if (message === '#help') {
 
@@ -46,6 +48,10 @@ export default class InputArea extends React.Component {
         })
       }
     }
+  }
+
+  changePlaceholder() {
+    this.setState({placeholder: 'enter your message here.'})
   }
 
   showLoginPanel() {

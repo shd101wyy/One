@@ -124,7 +124,12 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'app container' },
-	        _react2['default'].createElement(_componentsPost_contentJsx2['default'], { me: false, image: 'help.jpg', markdown: _examplesHelpJs2['default'] }),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'posts' },
+	          _react2['default'].createElement(_componentsPost_contentJsx2['default'], { me: false, image: 'help.jpg', markdown: _examplesHelpJs2['default'] }),
+	          _react2['default'].createElement(_componentsPost_contentJsx2['default'], { me: false, image: 'help.jpg', markdown: _examplesHelpJs2['default'] })
+	        ),
 	        _react2['default'].createElement(
 	          _componentsInput_areaJsx2['default'],
 	          { app: this },
@@ -20565,7 +20570,7 @@
 
 
 	// module
-	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\n.app {\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n}\n.post-content {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.post-content::-webkit-scrollbar {\n  display: none;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 64px;\n  position: absolute;\n  top: 30px;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img {\n  margin-left: 640px;\n}\n.post-content .profile-pic img {\n  width: 64px;\n  height: 64px;\n  border-radius: 6px;\n}\n.post-content .other-post-content {\n  width: 500px;\n  min-height: 200px;\n  padding: 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  border: 1px solid #ABABAB;\n  padding: 30px;\n  border-radius: 6px;\n  margin: 0 auto;\n  margin-top: -10px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\n.app {\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 64px;\n  position: absolute;\n  top: 6px;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img {\n  margin-left: 640px;\n}\n.post-content .profile-pic img {\n  width: 64px;\n  height: 64px;\n  border-radius: 6px;\n}\n.post-content .other-post-content {\n  width: 500px;\n  min-height: 200px;\n  padding: 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  border: 1px solid #ABABAB;\n  padding: 30px;\n  border-radius: 6px;\n  margin: 0 auto;\n  margin-top: -10px;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n", ""]);
 
 	// exports
 
@@ -20869,6 +20874,8 @@
 	        console.log('auth success', res);
 	        if (res) {
 	          if (callback) callback(res);else callback(null);
+	        } else if (callback) {
+	          callback(null);
 	        }
 	      },
 	      error: function error(res) {
@@ -20883,26 +20890,28 @@
 	      dataType: 'json',
 	      data: { email: email, password: password },
 	      success: function success(res) {
-	        console.log('here', res);
 	        if (res) {
 	          if (callback) callback(res);else callback(null);
+	        } else if (callback) {
+	          callback(null);
 	        }
 	      },
 	      error: function error(res) {
-	        console.log('here2', res);
 	        if (callback) callback(null);
 	      }
 	    });
 	  },
 
-	  signup: function signup(email, password, callback) {
+	  signup: function signup(email, password, userId, callback) {
 	    $.ajax('/signup', {
 	      type: 'POST',
 	      dataType: 'json',
-	      data: { email: email, password: password },
+	      data: { email: email, password: password, userId: userId },
 	      success: function success(res) {
 	        if (res) {
 	          if (callback) callback(res);else callback(null);
+	        } else if (callback) {
+	          callback(null);
 	        }
 	      },
 	      error: function error(res) {
@@ -20918,6 +20927,8 @@
 	      success: function success(res) {
 	        if (res) {
 	          if (callback) callback(res);else callback(null);
+	        } else if (callback) {
+	          callback(null);
 	        }
 	      },
 	      error: function error(res) {
@@ -20971,7 +20982,8 @@
 	    this.state = {
 	      signin: true,
 	      email: '',
-	      password: ''
+	      password: '',
+	      userId: ''
 	    };
 	  }
 
@@ -20987,7 +20999,7 @@
 
 	      return _react2['default'].createElement(
 	        'div',
-	        { className: 'signin' },
+	        { className: "signin " + (signin ? '' : 'taller') },
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'signin-panel' },
@@ -21011,6 +21023,12 @@
 	              'Password'
 	            ),
 	            _react2['default'].createElement('input', { type: 'password', id: 'inputPassword', className: 'form-control', placeholder: 'Password', required: '', onChange: this.inputPassword.bind(this) }),
+	            signin ? null : _react2['default'].createElement(
+	              'label',
+	              { htmlFor: 'inputUserId', className: 'sr-only' },
+	              'Email  address'
+	            ),
+	            signin ? null : _react2['default'].createElement('input', { type: 'email', id: 'inputUserId', className: 'form-control', placeholder: 'User Id (Unique one)', required: '', autofocus: '', onChange: this.inputUserId.bind(this) }),
 	            _react2['default'].createElement(
 	              'button',
 	              { className: 'btn btn-lg btn-primary btn-block', onClick: signin ? this.signin.bind(this) : this.signup.bind(this) },
@@ -21053,6 +21071,11 @@
 	      this.setState({ password: e.target.value });
 	    }
 	  }, {
+	    key: 'inputUserId',
+	    value: function inputUserId(e) {
+	      this.setState({ userId: e.target.value });
+	    }
+	  }, {
 	    key: 'signin',
 	    value: function signin(e) {
 	      var _this = this;
@@ -21075,8 +21098,9 @@
 
 	      e.preventDefault();
 	      var email = this.state.email,
-	          password = this.state.password;
-	      _apiUser_apiJs2['default'].signup(email, password, function (res) {
+	          password = this.state.password,
+	          userId = this.state.userId;
+	      _apiUser_apiJs2['default'].signup(email, password, userId, function (res) {
 	        if (res && res.success) {
 	          _this2.props.app.setState({ showSigninPanel: false, userLoggedIn: true });
 	        } else {
@@ -24957,7 +24981,8 @@
 	    _get(Object.getPrototypeOf(InputArea.prototype), 'constructor', this).call(this, props);
 
 	    this.state = {
-	      message: '#help'
+	      message: '',
+	      placeholder: 'type #help to get helps'
 	    };
 	  }
 
@@ -24968,8 +24993,9 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'input-area' },
-	        _react2['default'].createElement('input', { type: 'text', placeholder: userLoggedIn ? "enter your message here." : "", disabled: !userLoggedIn, value: userLoggedIn ? this.state.message : '', onChange: this.inputMessage.bind(this),
-	          onKeyDown: this.checkKeyDown.bind(this) }),
+	        _react2['default'].createElement('input', { type: 'text', placeholder: userLoggedIn ? this.state.placeholder : "", disabled: !userLoggedIn, value: userLoggedIn ? this.state.message : '', onChange: this.inputMessage.bind(this),
+	          onKeyDown: this.checkKeyDown.bind(this),
+	          onClick: this.changePlaceholder.bind(this) }),
 	        userLoggedIn ? _react2['default'].createElement('span', { className: 'signin-hint' }) : _react2['default'].createElement(
 	          'span',
 	          { className: 'signin-hint' },
@@ -24998,7 +25024,7 @@
 	      if (e.keyCode === 13) {
 	        // press enter key
 	        var message = this.state.message.trim();
-	        this.setState({ message: '' });
+	        this.setState({ message: '', placeholder: 'enter your message here.' });
 
 	        if (message === '#help') {} else if (message === '#logout') {
 	          _apiUser_apiJs2['default'].logout(function (res) {
@@ -25010,6 +25036,11 @@
 	          });
 	        }
 	      }
+	    }
+	  }, {
+	    key: 'changePlaceholder',
+	    value: function changePlaceholder() {
+	      this.setState({ placeholder: 'enter your message here.' });
 	    }
 	  }, {
 	    key: 'showLoginPanel',
@@ -26371,7 +26402,7 @@
 	      var me = this.props.me,
 	          profileImage = this.props.image,
 	          markdownString = this.props.markdown,
-	          html = this.props.html;
+	          htmlContent = this.props.htmlContent;
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'post-content' },
@@ -26397,10 +26428,10 @@
 	PostContent.propTypes = {
 	  me: _react2['default'].PropTypes.bool, // whether it is me that post this message,
 	  image: _react2['default'].PropTypes.string, // profile image of that user
-	  markdown: _react2['default'].PropTypes.string,
-	  html: _react2['default'].PropTypes.html
+	  markdown: _react2['default'].PropTypes.string
 	};
 	module.exports = exports['default'];
+	// htmlContent: React.PropTypes.html
 
 /***/ }
 /******/ ]);

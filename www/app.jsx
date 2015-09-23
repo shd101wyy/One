@@ -56,7 +56,10 @@ class App extends React.Component {
         </div>
       </div>
       */}
-      <PostContent me={false} image="help.jpg" markdown={helpDoc}></PostContent>
+      <div className="posts">
+        <PostContent me={false} image="help.jpg" markdown={helpDoc}></PostContent>
+        <PostContent me={false} image="help.jpg" markdown={helpDoc}></PostContent>
+      </div>
       <InputArea app={this}> </InputArea>
       {this.state.showSigninPanel ? <Signin app={this}/> : null}
     </div>

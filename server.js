@@ -60,6 +60,9 @@ app.post('/signin', function(req, res) {
   let post = req.body,
       email = post.email,
       password = post.password
+
+  if (password) password = encrypt(password)
+
   db_User.find({email, password}, function(error, users) {
     if (error || !users || users.length === 0) {
       console.log('signin error')
@@ -75,11 +78,15 @@ app.post('/signin', function(req, res) {
 app.post('/signup', function(req, res) {
   let post = req.body,
       email = post.email,
-      password = post.password
+      password = post.password,
+      userId = post.userId
+
+  if (password) password = encrypt(password)
 
   let newUser = db_User({
     email,
-    password
+    password,
+    userId
   })
 
   newUser.save(function(error) {

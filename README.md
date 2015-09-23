@@ -34,6 +34,9 @@
 
 * Chat with your friend by enter **@** so that your friend will also receive this message
 
+* 当初创建了一个新的原来不存在的 topic 的时候， 系统提示用户创建了新的 topic  
+
+* 经验值机制。 根据用户发送的 message 来提升经验值，以及等级。
 ---
 ##### Test
 ```

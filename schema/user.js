@@ -20,6 +20,7 @@ db.once("open", function(callback){
 var userSchema = new Schema({
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
+    userId: {type: String, required: true, unique: true}
 /*
     intro: {type: String, default: ""},
     gender: {type: String, default: "Female"},
