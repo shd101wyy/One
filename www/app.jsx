@@ -187,6 +187,10 @@ class App extends React.Component {
     })
     // console.log('show my message', updateUserData)
     this.forceUpdate()
+
+    // scroll to bottom
+    let postsDiv = $('.posts')
+    postsDiv.scrollTop($(window).height())
   }
 }
 

@@ -287,6 +287,10 @@
 	      });
 	      // console.log('show my message', updateUserData)
 	      this.forceUpdate();
+
+	      // scroll to bottom
+	      var postsDiv = $('.posts');
+	      postsDiv.scrollTop($(window).height());
 	    }
 	  }]);
 
