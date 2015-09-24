@@ -1,3 +1,6 @@
+// some useful websites
+// http://cssarrowplease.com/
+
 import React from 'react'
 let marked = require('marked')
 
@@ -37,7 +40,7 @@ export default class PostContent extends React.Component {
           : null}
         </div>
         <div className="other-post">
-          <div className="other-post-content" dangerouslySetInnerHTML={{__html:marked(this.state.markdown)}}>
+          <div className={'other-post-content ' + (me ? 'me' : '')} dangerouslySetInnerHTML={{__html:marked(this.state.markdown)}}>
         </div>
         </div>
       </div>

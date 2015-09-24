@@ -21,7 +21,8 @@ var userSchema = new Schema({
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     userId: {type: String, required: true, unique: true},
-    intro: {type: String, required: false}
+    intro: {type: String, required: false},
+    topics: {type: Array, default: []}   // topics currently follow
 /*
     intro: {type: String, default: ""},
     gender: {type: String, default: "Female"},

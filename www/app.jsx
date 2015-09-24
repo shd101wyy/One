@@ -38,7 +38,8 @@ class App extends React.Component {
       userLoggedIn: false,
       showMarkdownEditor: false,
       posts: [],
-      markdownDefaultValue: ''
+      markdownDefaultValue: '',
+      userData: {}
     }
 
     if (window.socket) {
@@ -50,15 +51,23 @@ class App extends React.Component {
     userAPI.checkAuth((res)=> {
       if (res && res.success) {
         window.global.userId = res.userId
-        socketAPI.userConnect(res.userId)
+        socketAPI.userConnect(res.userId) // connect to socket
         this.setState({userLoggedIn: true})
+
+        // get user data
+        userAPI.getProfile(window.global.userId, (res)=> {
+          if (res && res.success) {
+            this.setState({userData: res.data})
+          }
+        })
       }
     })
   }
 
   render() {
     let posts = []
-    for(var i = this.state.posts.length - 1; i >=0; i--) {
+    // for(let i = this.state.posts.length - 1; i >=0; i--) {
+    for(let i = 0; i < this.state.posts.length; i++) {
       posts.push(<PostContent app={this} postData={this.state.posts[i]} key={i}></PostContent>)
     }
 
@@ -84,6 +93,12 @@ class App extends React.Component {
       {this.state.showSigninPanel ? <Signin app={this} /> : null}
 
       {this.state.showMarkdownEditor ? <MarkdownEditor app={this} /> : null}
+
+      {this.state.userLoggedIn ? <div className="friend-list"> </div> : null}
+
+      {this.state.userLoggedIn ? <div className="hot-topics"> </div> : null}
+
+      {this.state.userLoggedIn ? <div className="my-topics"> </div> : null}
     </div>
     )
   }
@@ -97,6 +112,7 @@ class App extends React.Component {
       userAPI.getProfile(window.global.userId, (res)=> {
         if (res && res.success) {
           // TODO: dont sent out user password
+          console.log('check profile: ', res.data)
           let user = res.data,
               postData = {
                             me: true,

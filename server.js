@@ -9,6 +9,9 @@ let bodyParser = require('body-parser')
 
 let io = require('socket.io')(http)
 
+let socketMap = {} // key is userId, value is socket
+let topicMap = {}  // key is topic-name, value is Set([userId_1, userId_2, ...])
+
 
 /**
  * Encrypt string
@@ -28,6 +31,32 @@ function encrypt(text){
  */
 let db_User = require("./schema/user.js") // require database User model.
 
+/**
+ * Initialize topics topicMap
+ *
+ */
+let initializeTopics = function() {
+  console.log('begin to initialize topics')
+  db_User.find({}, function(error, users) {
+    if (error || !users) {
+      console.log(error)
+      return
+    } else {
+      users.forEach((user)=> {
+        let topics = user.topics,
+            userId = user.userId
+        topics.forEach((topic)=> {
+          if (!topicMap[topic]) topicMap[topic] = new Set()
+          topicMap[topic].add(userId)
+        })
+      })
+      console.log('finish initializing topicMap: ', topicMap)
+    }
+  })
+}
+
+// initialization functions...
+initializeTopics()
 
 app.use(session({
   secret: '1234567890QWERTY',
@@ -145,7 +174,6 @@ app.post('/update_profile_intro', function(req, res) {
 })
 
 // socket.io
-let socketMap = {} // key is userId, value is socket
 io.on('connection', function(socket) {
   socket.on('user-connect', function(userId) {
     console.log('user ' + userId + ' logged in')
@@ -161,6 +189,34 @@ io.on('connection', function(socket) {
       } else {
         // TODO: send message to offline people
       }
+    })
+  })
+
+  socket.on('topic-message', function(tags, message) {
+    tags.forEach((topic)=> {
+      if (!topicMap[topic]) topicMap[topic] = new Set()
+      topicMap[topic].add(socket.userId)
+      topicMap[topic].forEach((userId) => {
+        if (userId !== socket.userId) {
+          if (socketMap[userId]) { // userId is online
+            socketMap[userId].emit('receive-topic-message', {message, fromId: socket.userId})
+          }
+        }
+      })
+
+      // add that topic to user database
+      db_User.findOne({userId: socket.userId}, function(error, doc) {
+        if (error || !doc) {
+          console.log('failed to add topic to user')
+        } else {
+          let topics = doc.topics,
+              topicsSet = new Set(topics)
+          topicsSet.add(topic)
+          doc.topics = Array.from(topicsSet)
+          console.log('save topic successfully')
+          doc.save()
+        }
+      })
     })
   })
 

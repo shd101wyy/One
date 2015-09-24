@@ -120,7 +120,8 @@
 	      userLoggedIn: false,
 	      showMarkdownEditor: false,
 	      posts: [],
-	      markdownDefaultValue: ''
+	      markdownDefaultValue: '',
+	      userData: {}
 	    };
 
 	    if (window.socket) {
@@ -136,8 +137,15 @@
 	      _apiUser_apiJs2['default'].checkAuth(function (res) {
 	        if (res && res.success) {
 	          window.global.userId = res.userId;
-	          _apiSocket_apiJs2['default'].userConnect(res.userId);
+	          _apiSocket_apiJs2['default'].userConnect(res.userId); // connect to socket
 	          _this.setState({ userLoggedIn: true });
+
+	          // get user data
+	          _apiUser_apiJs2['default'].getProfile(window.global.userId, function (res) {
+	            if (res && res.success) {
+	              _this.setState({ userData: res.data });
+	            }
+	          });
 	        }
 	      });
 	    }
@@ -145,7 +153,8 @@
 	    key: 'render',
 	    value: function render() {
 	      var posts = [];
-	      for (var i = this.state.posts.length - 1; i >= 0; i--) {
+	      // for(let i = this.state.posts.length - 1; i >=0; i--) {
+	      for (var i = 0; i < this.state.posts.length; i++) {
 	        posts.push(_react2['default'].createElement(_componentsPost_contentJsx2['default'], { app: this, postData: this.state.posts[i], key: i }));
 	      }
 
@@ -163,7 +172,22 @@
 	          ' '
 	        ),
 	        this.state.showSigninPanel ? _react2['default'].createElement(_componentsLogin_signupJsx.Signin, { app: this }) : null,
-	        this.state.showMarkdownEditor ? _react2['default'].createElement(_componentsMarkdown_editorJsx2['default'], { app: this }) : null
+	        this.state.showMarkdownEditor ? _react2['default'].createElement(_componentsMarkdown_editorJsx2['default'], { app: this }) : null,
+	        this.state.userLoggedIn ? _react2['default'].createElement(
+	          'div',
+	          { className: 'friend-list' },
+	          ' '
+	        ) : null,
+	        this.state.userLoggedIn ? _react2['default'].createElement(
+	          'div',
+	          { className: 'hot-topics' },
+	          ' '
+	        ) : null,
+	        this.state.userLoggedIn ? _react2['default'].createElement(
+	          'div',
+	          { className: 'my-topics' },
+	          ' '
+	        ) : null
 	      );
 	    }
 
@@ -180,6 +204,7 @@
 	        _apiUser_apiJs2['default'].getProfile(window.global.userId, function (res) {
 	          if (res && res.success) {
 	            // TODO: dont sent out user password
+	            console.log('check profile: ', res.data);
 	            var user = res.data,
 	                postData = {
 	              me: true,
@@ -20695,7 +20720,7 @@
 
 
 	// module
-	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.app {\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n  margin-bottom: 32px;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 640px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 48px;\n  height: 48px;\n  border-radius: 6px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  width: 500px;\n  padding: 15px 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  border: 1px solid #ABABAB;\n  padding: 30px;\n  border-radius: 6px;\n  margin: 0 auto;\n  margin-top: -10px;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: auto;\n}\n.markdown-editor .panel .preview::-webkit-scrollbar {\n  display: none;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.app {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n  margin-bottom: 32px;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 630px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 48px;\n  height: 48px;\n  border-radius: 6px;\n  margin-left: 20px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  position: relative;\n  width: 500px;\n  padding: 15px 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.post-content .other-post-content:after,\n.post-content .other-post-content:before {\n  right: 100%;\n  top: 44px;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n.post-content .other-post-content:after {\n  border-color: rgba(136, 183, 213, 0);\n  border-right-color: #fff;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content:before {\n  border-color: rgba(194, 225, 245, 0);\n  border-right-color: #85C0D0;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content.me:after,\n.post-content .other-post-content.me:before {\n  right: 0;\n  left: 100%;\n}\n.post-content .other-post-content.me:after {\n  border-right: none;\n  border-left-color: #fff;\n}\n.post-content .other-post-content.me:before {\n  border-right: none;\n  border-left-color: #85C0D0;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: auto;\n}\n.markdown-editor .panel .preview::-webkit-scrollbar {\n  display: none;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n.friend-list {\n  width: 100px;\n  height: 90%;\n  position: fixed;\n  top: 20px;\n  right: 20px;\n  background-color: rgba(69, 69, 69, 0.31);\n}\n.hot-topics {\n  position: fixed;\n  top: 20px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  background-color: rgba(69, 69, 69, 0.31);\n}\n.my-topics {\n  position: fixed;\n  top: 340px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  background-color: rgba(69, 69, 69, 0.31);\n}\n", ""]);
 
 	// exports
 
@@ -21132,6 +21157,13 @@
 	          window.global.userId = res.userId;
 	          _apiSocket_apiJs2['default'].userConnect(res.userId);
 	          _this.props.app.setState({ showSigninPanel: false, userLoggedIn: true });
+
+	          // get user data
+	          _apiUser_apiJs2['default'].getProfile(window.global.userId, function (res) {
+	            if (res && res.success) {
+	              _this.props.app.setState({ userData: res.data });
+	            }
+	          });
 	        } else {
 	          alert('failed to sign in');
 	        }
@@ -21151,6 +21183,13 @@
 	          window.global.userId = userId;
 	          _apiSocket_apiJs2['default'].userConnect(userId);
 	          _this2.props.app.setState({ showSigninPanel: false, userLoggedIn: true });
+
+	          // get user data
+	          _apiUser_apiJs2['default'].getProfile(window.global.userId, function (res) {
+	            if (res && res.success) {
+	              _this2.props.app.setState({ userData: res.data });
+	            }
+	          });
 	        } else {
 	          alert('failed to sign up');
 	        }
@@ -25235,20 +25274,27 @@
 	              if (arr[i][0] === '@') {
 	                ats.push(arr[i].slice(1));
 	              } else if (arr[i][0] === '#') {
-	                ats.push(arr[i].slice(1));
+	                tags.push(arr[i].slice(1));
 	              }
 	            }
 
-	            if (!tags.length && ats.length) {
+	            if (!tags.length) {
 	              // send private message
-	              console.log('private message: ', arr);
-	              _apiSocket_apiJs2['default'].sendPrivateMessage(ats, message, function (res) {
-	                if (res && res.success) {
-	                  console.log('message sent');
-	                } else {
-	                  console.log('failed to deliver message');
+	              if (ats.length) {
+	                console.log('private message: ', arr);
+	                _apiSocket_apiJs2['default'].sendPrivateMessage(ats, message);
+	              } else {// 既没有 tags, 也没有 ats
+
+	              }
+	            } else {
+	                if (ats.length) {} else {
+	                  // 只有 tags, 没有 ats
+	                  _apiSocket_apiJs2['default'].sendTopicMessage(tags, message);
 	                }
-	              });
+	              }
+
+	            if (arr[0][0] === '@' || arr[0][0] === '#') {
+	              this.setState({ message: arr[0] + ' ' });
 	            }
 	          }
 	        }
@@ -25275,6 +25321,9 @@
 /***/ },
 /* 210 */
 /***/ function(module, exports, __webpack_require__) {
+
+	// some useful websites
+	// http://cssarrowplease.com/
 
 	'use strict';
 
@@ -25348,7 +25397,7 @@
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'other-post' },
-	          _react2['default'].createElement('div', { className: 'other-post-content', dangerouslySetInnerHTML: { __html: marked(this.state.markdown) } })
+	          _react2['default'].createElement('div', { className: 'other-post-content ' + (me ? 'me' : ''), dangerouslySetInnerHTML: { __html: marked(this.state.markdown) } })
 	        )
 	      );
 	    }
@@ -26830,11 +26879,19 @@
 	var socketAPI = {
 	  userConnect: function userConnect(userId) {
 	    socket.emit('user-connect', userId);
+	    document.title = userId;
 	  },
 
 	  // ats => ['raphael', 'christian']
-	  sendPrivateMessage: function sendPrivateMessage(ats, message, callback) {
+	  sendPrivateMessage: function sendPrivateMessage(ats, message) {
 	    socket.emit('private-message', ats, message);
+
+	    socket.app.showMyMessage(message);
+	  },
+
+	  // tags => ['uiuc', 'fine']
+	  sendTopicMessage: function sendTopicMessage(tags, message) {
+	    socket.emit('topic-message', tags, message);
 
 	    socket.app.showMyMessage(message);
 	  }
@@ -26845,6 +26902,13 @@
 	      fromId = data.fromId;
 	  console.log('receive message: ', message, ' from ', fromId);
 
+	  socket.app.showMessage(message, fromId);
+	});
+
+	socket.on('receive-topic-message', function (data) {
+	  var message = data.message,
+	      fromId = data.fromId;
+	  console.log('receive topic message', message, ' from ', fromId);
 	  socket.app.showMessage(message, fromId);
 	});
 

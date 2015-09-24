@@ -83,6 +83,13 @@ export class Signin extends React.Component {
         window.global.userId = res.userId
         socketAPI.userConnect(res.userId)
         this.props.app.setState({showSigninPanel: false, userLoggedIn: true})
+
+        // get user data
+        userAPI.getProfile(window.global.userId, (res)=> {
+          if (res && res.success) {
+            this.props.app.setState({userData: res.data})
+          }
+        })
       } else {
         alert('failed to sign in')
       }
@@ -99,6 +106,13 @@ export class Signin extends React.Component {
         window.global.userId = userId
         socketAPI.userConnect(userId)
         this.props.app.setState({showSigninPanel: false, userLoggedIn: true})
+
+        // get user data
+        userAPI.getProfile(window.global.userId, (res)=> {
+          if (res && res.success) {
+            this.props.app.setState({userData: res.data})
+          }
+        })
       } else {
         alert('failed to sign up')
       }

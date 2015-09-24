@@ -7,11 +7,19 @@ let socket = window.socket
 let socketAPI = {
   userConnect: function(userId) {
     socket.emit('user-connect', userId)
+    document.title = userId
   },
 
   // ats => ['raphael', 'christian']
-  sendPrivateMessage: function(ats, message, callback) {
+  sendPrivateMessage: function(ats, message) {
     socket.emit('private-message', ats, message)
+
+    socket.app.showMyMessage(message)
+  },
+
+  // tags => ['uiuc', 'fine']
+  sendTopicMessage: function(tags, message) {
+    socket.emit('topic-message', tags, message)
 
     socket.app.showMyMessage(message)
   }
@@ -23,6 +31,13 @@ socket.on('receive-message', function(data) {
       fromId = data.fromId
   console.log('receive message: ', message, ' from ', fromId)
 
+  socket.app.showMessage(message, fromId)
+})
+
+socket.on('receive-topic-message', function(data) {
+  let message = data.message,
+      fromId = data.fromId
+  console.log('receive topic message', message, ' from ', fromId)
   socket.app.showMessage(message, fromId)
 })
 

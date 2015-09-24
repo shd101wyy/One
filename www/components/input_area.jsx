@@ -66,19 +66,27 @@ export default class InputArea extends React.Component {
             if (arr[i][0] === '@') {
               ats.push(arr[i].slice(1))
             } else if (arr[i][0] === '#') {
-              ats.push(arr[i].slice(1))
+              tags.push(arr[i].slice(1))
             }
           }
 
-          if (!tags.length && ats.length) { // send private message
-            console.log('private message: ', arr)
-            socketAPI.sendPrivateMessage(ats, message, (res)=> {
-              if (res && res.success) {
-                console.log('message sent')
-              } else {
-                console.log('failed to deliver message')
-              }
-            })
+          if (!tags.length) { // send private message
+            if (ats.length) {
+              console.log('private message: ', arr)
+              socketAPI.sendPrivateMessage(ats, message)
+            } else { // 既没有 tags, 也没有 ats
+
+            }
+          } else {
+            if (ats.length) {
+
+            } else { // 只有 tags, 没有 ats
+              socketAPI.sendTopicMessage(tags, message)
+            }
+          }
+
+          if (arr[0][0] === '@' || arr[0][0] === '#') {
+            this.setState({message: arr[0] + ' '})
           }
         }
       }
