@@ -64,7 +64,7 @@ let startHotTopics = function() {
       arr.push([key, topicHits[key]])
     }
     hotTopics = arr.sort((a, b)=> b[1] - a[1]).splice(0, 10) // get top 10
-    console.log('hot topics: ', hotTopics)
+    // console.log('hot topics: ', hotTopics)
   }
 
   // setInterval(getTop, 1000 * 60 * 5) // every 5 minutes
