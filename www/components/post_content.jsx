@@ -32,7 +32,7 @@ export default class PostContent extends React.Component {
       <div className="post-content">
         <div className={'profile-pic ' + (me ? 'me' : '')}>
           <img src={this.state.imageSrc}/>
-          {me ?
+          {me && !this.props.postData.hideEditButton ?
             <i className="fa fa-pencil-square-o" onClick={this.editPostContent.bind(this)}></i>
           : null}
         </div>

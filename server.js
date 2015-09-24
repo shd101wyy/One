@@ -145,11 +145,27 @@ app.post('/update_profile_intro', function(req, res) {
 })
 
 // socket.io
+let socketMap = {} // key is userId, value is socket
 io.on('connection', function(socket) {
-  let socketMap = {} // key is userId, value is socket
   socket.on('user-connect', function(userId) {
     console.log('user ' + userId + ' logged in')
     socketMap[userId] = socket
+    socket.userId = userId
+  })
+
+  socket.on('private-message', function(ats, message) {
+    console.log('private message: ', ats, message)
+    ats.forEach((userId)=> {
+      if (socketMap[userId]) { // this userId user is online
+        socketMap[userId].emit('receive-message', {message, fromId: socket.userId})
+      } else {
+        // TODO: send message to offline people
+      }
+    })
+  })
+
+  socket.on("disconnect", function(){
+    delete(socketMap[socket.userId])
   })
 })
 

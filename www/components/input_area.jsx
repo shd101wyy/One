@@ -1,6 +1,7 @@
 import React from 'react'
 
 import userAPI from '../api/user_api.js'
+import socketAPI from '../api/socket_api.js'
 
 export default class InputArea extends React.Component {
   constructor(props) {
@@ -52,7 +53,33 @@ export default class InputArea extends React.Component {
       } else {
         let arr = message.split(' ')
         if (arr.length === 1 && arr[0][0] === '@') { // @raphael,  search for user
-          this.props.app.showOtherProfile(arr[0].slice(1))
+          let userId = arr[0].slice(1)
+          if (userId === window.global.userId) {
+            this.props.app.showSelfProfile()
+          } else {
+            this.props.app.showOtherProfile(arr[0].slice(1))
+          }
+        } else {
+          let tags = []
+          let ats = []
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i][0] === '@') {
+              ats.push(arr[i].slice(1))
+            } else if (arr[i][0] === '#') {
+              ats.push(arr[i].slice(1))
+            }
+          }
+
+          if (!tags.length && ats.length) { // send private message
+            console.log('private message: ', arr)
+            socketAPI.sendPrivateMessage(ats, message, (res)=> {
+              if (res && res.success) {
+                console.log('message sent')
+              } else {
+                console.log('failed to deliver message')
+              }
+            })
+          }
         }
       }
     }

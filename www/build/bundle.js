@@ -122,6 +122,10 @@
 	      posts: [],
 	      markdownDefaultValue: ''
 	    };
+
+	    if (window.socket) {
+	      window.socket.app = this;
+	    }
 	  }
 
 	  _createClass(App, [{
@@ -228,6 +232,33 @@
 	        image: 'help.jpg',
 	        markdown: _examplesHelpJs2['default'],
 	        topic: 'help'
+	      });
+	      this.forceUpdate();
+	    }
+
+	    // show message
+	  }, {
+	    key: 'showMessage',
+	    value: function showMessage(message, fromId) {
+	      var posts = this.state.posts;
+	      posts.push({
+	        me: false,
+	        image: fromId + '.jpg',
+	        markdown: message
+	      });
+	      this.forceUpdate();
+	    }
+
+	    // show message i sent
+	  }, {
+	    key: 'showMyMessage',
+	    value: function showMyMessage(message) {
+	      var posts = this.state.posts;
+	      posts.push({
+	        me: true,
+	        image: window.global.userId + '.jpg',
+	        markdown: message,
+	        hideEditButton: true
 	      });
 	      this.forceUpdate();
 	    }
@@ -20664,7 +20695,7 @@
 
 
 	// module
-	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\n.app {\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 6px;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 640px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 64px;\n  height: 64px;\n  border-radius: 6px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  width: 500px;\n  padding: 15px 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  border: 1px solid #ABABAB;\n  padding: 30px;\n  border-radius: 6px;\n  margin: 0 auto;\n  margin-top: -10px;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: auto;\n}\n.markdown-editor .panel .preview::-webkit-scrollbar {\n  display: none;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.app {\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n  margin-bottom: 32px;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 640px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 48px;\n  height: 48px;\n  border-radius: 6px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  width: 500px;\n  padding: 15px 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  border: 1px solid #ABABAB;\n  padding: 30px;\n  border-radius: 6px;\n  margin: 0 auto;\n  margin-top: -10px;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: auto;\n}\n.markdown-editor .panel .preview::-webkit-scrollbar {\n  display: none;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n", ""]);
 
 	// exports
 
@@ -25117,6 +25148,10 @@
 
 	var _apiUser_apiJs2 = _interopRequireDefault(_apiUser_apiJs);
 
+	var _apiSocket_apiJs = __webpack_require__(216);
+
+	var _apiSocket_apiJs2 = _interopRequireDefault(_apiSocket_apiJs);
+
 	var InputArea = (function (_React$Component) {
 	  _inherits(InputArea, _React$Component);
 
@@ -25187,7 +25222,34 @@
 	          var arr = message.split(' ');
 	          if (arr.length === 1 && arr[0][0] === '@') {
 	            // @raphael,  search for user
-	            this.props.app.showOtherProfile(arr[0].slice(1));
+	            var userId = arr[0].slice(1);
+	            if (userId === window.global.userId) {
+	              this.props.app.showSelfProfile();
+	            } else {
+	              this.props.app.showOtherProfile(arr[0].slice(1));
+	            }
+	          } else {
+	            var tags = [];
+	            var ats = [];
+	            for (var i = 0; i < arr.length; i++) {
+	              if (arr[i][0] === '@') {
+	                ats.push(arr[i].slice(1));
+	              } else if (arr[i][0] === '#') {
+	                ats.push(arr[i].slice(1));
+	              }
+	            }
+
+	            if (!tags.length && ats.length) {
+	              // send private message
+	              console.log('private message: ', arr);
+	              _apiSocket_apiJs2['default'].sendPrivateMessage(ats, message, function (res) {
+	                if (res && res.success) {
+	                  console.log('message sent');
+	                } else {
+	                  console.log('failed to deliver message');
+	                }
+	              });
+	            }
 	          }
 	        }
 	      }
@@ -25281,7 +25343,7 @@
 	          'div',
 	          { className: 'profile-pic ' + (me ? 'me' : '') },
 	          _react2['default'].createElement('img', { src: this.state.imageSrc }),
-	          me ? _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o', onClick: this.editPostContent.bind(this) }) : null
+	          me && !this.props.postData.hideEditButton ? _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o', onClick: this.editPostContent.bind(this) }) : null
 	        ),
 	        _react2['default'].createElement(
 	          'div',
@@ -26768,8 +26830,23 @@
 	var socketAPI = {
 	  userConnect: function userConnect(userId) {
 	    socket.emit('user-connect', userId);
+	  },
+
+	  // ats => ['raphael', 'christian']
+	  sendPrivateMessage: function sendPrivateMessage(ats, message, callback) {
+	    socket.emit('private-message', ats, message);
+
+	    socket.app.showMyMessage(message);
 	  }
 	};
+
+	socket.on('receive-message', function (data) {
+	  var message = data.message,
+	      fromId = data.fromId;
+	  console.log('receive message: ', message, ' from ', fromId);
+
+	  socket.app.showMessage(message, fromId);
+	});
 
 	exports['default'] = socketAPI;
 	module.exports = exports['default'];

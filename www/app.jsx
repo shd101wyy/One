@@ -40,6 +40,10 @@ class App extends React.Component {
       posts: [],
       markdownDefaultValue: ''
     }
+
+    if (window.socket) {
+      window.socket.app = this
+    }
   }
 
   componentDidMount() {
@@ -139,6 +143,29 @@ class App extends React.Component {
       image: 'help.jpg',
       markdown: helpDoc,
       topic: 'help'
+    })
+    this.forceUpdate()
+  }
+
+  // show message
+  showMessage(message, fromId) {
+    let posts = this.state.posts
+    posts.push({
+      me: false,
+      image: fromId + '.jpg',
+      markdown: message
+    })
+    this.forceUpdate()
+  }
+
+  // show message i sent
+  showMyMessage(message) {
+    let posts = this.state.posts
+    posts.push({
+      me: true,
+      image: window.global.userId + '.jpg',
+      markdown: message,
+      hideEditButton: true
     })
     this.forceUpdate()
   }
