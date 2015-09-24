@@ -13,7 +13,7 @@ let socketMap = {} // key is userId, value is socket
 let topicMap = {}  // key is topic-name, value is Set([userId_1, userId_2, ...])
 let hotTopics = [] // top 10 hot topics
 let topicHits = {} // key is topic, value is mentioned times
-
+let offlineMessage = {} // key is userId, value is [message1, message2], sent when userId is not online
 /**
  * Encrypt string
  */
@@ -225,6 +225,12 @@ io.on('connection', function(socket) {
     console.log('user ' + userId + ' logged in')
     socketMap[userId] = socket
     socket.userId = userId
+
+    // TODO: user request offline message in the future instead of sending directly
+    if (offlineMessage[userId]) {
+      socket.emit('receive-offline-message', offlineMessage[userId])
+      delete(offlineMessage[userId])
+    }
   })
 
   socket.on('send-message', function(tags, ats, message) {
@@ -274,7 +280,12 @@ io.on('connection', function(socket) {
     // send to ats that is not sent
     for(let userId in atsMap) {
       if (atsMap[userId]) {
-        socketMap[userId].emit('receive-message', {message, fromId: socket.userId})
+        if (socketMap[userId]) {
+          socketMap[userId].emit('receive-message', {message, fromId: socket.userId})
+        } else { // userId is offline
+          if (!offlineMessage[userId]) offlineMessage[userId] = []
+          offlineMessage[userId].push([message, socket.userId])
+        }
       }
     }
   })

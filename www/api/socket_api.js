@@ -42,4 +42,12 @@ socket.on('update-my-topics', function(data) {
   socket.app.setState({userData})
 })
 
+// TODO: user request offline message in the future instead of sending directly
+socket.on('receive-offline-message', function(data) {
+  console.log('receive-offline-message', data)
+  data.forEach((d) => {
+    socket.app.showMessage(d[0], d[1])
+  })
+})
+
 export default socketAPI
