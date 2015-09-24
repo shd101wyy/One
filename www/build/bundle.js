@@ -48,7 +48,7 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -278,10 +278,6 @@
 	  }, {
 	    key: 'showMyMessage',
 	    value: function showMyMessage(message) {
-	      var _this4 = this;
-
-	      var updateUserData = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-
 	      var posts = this.state.posts;
 	      posts.push({
 	        me: true,
@@ -290,18 +286,6 @@
 	        hideEditButton: true
 	      });
 	      // console.log('show my message', updateUserData)
-
-	      if (updateUserData) {
-	        // get user data
-	        _apiUser_apiJs2['default'].getProfile(window.global.userId, function (res) {
-	          if (res && res.success) {
-	            _this4.setState({ userData: res.data });
-	          } else {
-	            console.log('failed to get user data');
-	          }
-	        });
-	      }
-
 	      this.forceUpdate();
 	    }
 	  }]);
@@ -25218,32 +25202,34 @@
 
 	  // ats => ['raphael', 'christian']
 	  sendPrivateMessage: function sendPrivateMessage(ats, message) {
-	    socket.emit('private-message', ats, message);
+	    socket.emit('send-message', [], ats, message);
 
 	    socket.app.showMyMessage(message);
 	  },
 
 	  // tags => ['uiuc', 'fine']
 	  sendTopicMessage: function sendTopicMessage(tags, message) {
-	    socket.emit('topic-message', tags, message);
+	    socket.emit('send-message', tags, [], message);
 
-	    socket.app.showMyMessage(message, true);
+	    socket.app.showMyMessage(message);
+	  },
+
+	  sendTopicMessageWithAts: function sendTopicMessageWithAts(tags, ats, message) {
+	    socket.emit('send-message', tags, ats, message);
+	    socket.app.showMyMessage(message);
 	  }
 	};
 
 	socket.on('receive-message', function (data) {
 	  var message = data.message,
 	      fromId = data.fromId;
-	  console.log('receive message: ', message, ' from ', fromId);
-
+	  console.log('receive message', message, ' from ', fromId);
 	  socket.app.showMessage(message, fromId);
 	});
 
-	socket.on('receive-topic-message', function (data) {
-	  var message = data.message,
-	      fromId = data.fromId;
-	  console.log('receive topic message', message, ' from ', fromId);
-	  socket.app.showMessage(message, fromId);
+	socket.on('update-my-topics', function (data) {
+	  var userData = data.userData;
+	  socket.app.setState({ userData: userData });
 	});
 
 	exports['default'] = socketAPI;
@@ -25355,7 +25341,7 @@
 	      } else if (message === '#me') {
 	        this.props.app.showSelfProfile();
 	      } else {
-	        var arr = message.split(' ');
+	        var arr = message.replace('\n', ' ').split(' ');
 	        if (arr.length === 1 && arr[0][0] === '@') {
 	          // @raphael,  search for user
 	          var userId = arr[0].slice(1);
@@ -25368,9 +25354,13 @@
 	          var tags = [];
 	          var ats = [];
 	          for (var i = 0; i < arr.length; i++) {
-	            if (arr[i][0] === '@') {
-	              ats.push(arr[i].slice(1).toLowerCase());
-	            } else if (arr[i][0] === '#') {
+	            if (arr[i][0] === '@' && arr[i].length > 1) {
+	              var userId = arr[i].slice(1);
+	              if (userId !== window.global.userId) {
+	                // 防止给 @自己 发送信息。
+	                ats.push(userId.toLowerCase());
+	              }
+	            } else if (arr[i][0] === '#' && arr[i].length > 1) {
 	              tags.push(arr[i].slice(1).toLowerCase());
 	            }
 	          }
@@ -25384,7 +25374,9 @@
 
 	            }
 	          } else {
-	              if (ats.length) {} else {
+	              if (ats.length) {
+	                _apiSocket_apiJs2['default'].sendTopicMessageWithAts(tags, ats, message);
+	              } else {
 	                // 只有 tags, 没有 ats
 	                _apiSocket_apiJs2['default'].sendTopicMessage(tags, message);
 	              }
@@ -25422,6 +25414,7 @@
 	      var _this2 = this;
 
 	      this.props.app.setState({ showMarkdownEditor: true,
+	        markdownDefaultValue: this.state.message,
 	        sendMarkdown: function sendMarkdown(markdown) {
 	          console.log('send markdown', markdown);
 	          _this2.send(markdown);

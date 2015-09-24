@@ -12,33 +12,34 @@ let socketAPI = {
 
   // ats => ['raphael', 'christian']
   sendPrivateMessage: function(ats, message) {
-    socket.emit('private-message', ats, message)
+    socket.emit('send-message', [], ats, message)
 
     socket.app.showMyMessage(message)
   },
 
   // tags => ['uiuc', 'fine']
   sendTopicMessage: function(tags, message) {
-    socket.emit('topic-message', tags, message)
+    socket.emit('send-message', tags, [], message)
 
-    socket.app.showMyMessage(message, true)
+    socket.app.showMyMessage(message)
+  },
+
+  sendTopicMessageWithAts: function(tags, ats, message) {
+    socket.emit('send-message', tags, ats, message)
+    socket.app.showMyMessage(message)
   }
 }
-
 
 socket.on('receive-message', function(data) {
   let message = data.message,
       fromId = data.fromId
-  console.log('receive message: ', message, ' from ', fromId)
-
+  console.log('receive message', message, ' from ', fromId)
   socket.app.showMessage(message, fromId)
 })
 
-socket.on('receive-topic-message', function(data) {
-  let message = data.message,
-      fromId = data.fromId
-  console.log('receive topic message', message, ' from ', fromId)
-  socket.app.showMessage(message, fromId)
+socket.on('update-my-topics', function(data) {
+  let userData = data.userData
+  socket.app.setState({userData})
 })
 
 export default socketAPI

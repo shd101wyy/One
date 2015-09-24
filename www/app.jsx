@@ -177,7 +177,7 @@ class App extends React.Component {
   }
 
   // show message i sent
-  showMyMessage(message, updateUserData=false) {
+  showMyMessage(message) {
     let posts = this.state.posts
     posts.push({
       me: true,
@@ -186,18 +186,6 @@ class App extends React.Component {
       hideEditButton: true
     })
     // console.log('show my message', updateUserData)
-
-    if (updateUserData) {
-      // get user data
-      userAPI.getProfile(window.global.userId, (res)=> {
-        if (res && res.success) {
-          this.setState({userData: res.data})
-        } else {
-          console.log('failed to get user data')
-        }
-      })
-    }
-
     this.forceUpdate()
   }
 }

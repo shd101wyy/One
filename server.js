@@ -227,40 +227,24 @@ io.on('connection', function(socket) {
     socket.userId = userId
   })
 
-  socket.on('private-message', function(ats, message) {
-    console.log('private message: ', ats, message)
-    ats.forEach((userId)=> {
-      if (socketMap[userId]) { // this userId user is online
-        socketMap[userId].emit('receive-message', {message, fromId: socket.userId})
-      } else {
-        // TODO: send message to offline people
-      }
-    })
-  })
+  socket.on('send-message', function(tags, ats, message) {
+    console.log('send-message', tags, ats, message)
 
-  socket.on('topic-message', function(tags, message) {
+    let atsMap = {}
+    for(let i = 0; i < ats.length; i++) {
+      atsMap[ats[i]] = true
+    }
     tags.forEach((topic)=> {
       if (!topicMap[topic]) topicMap[topic] = new Set()
       topicMap[topic].add(socket.userId)
       topicMap[topic].forEach((userId) => {
         if (userId !== socket.userId) {
           if (socketMap[userId]) { // userId is online
-            socketMap[userId].emit('receive-topic-message', {message, fromId: socket.userId})
+            socketMap[userId].emit('receive-message', {message, fromId: socket.userId})
           }
-        }
-      })
-
-      // add that topic to user database
-      db_User.findOne({userId: socket.userId}, function(error, doc) {
-        if (error || !doc) {
-          console.log('failed to add topic to user')
-        } else {
-          let topics = doc.topics,
-              topicsSet = new Set(topics)
-          topicsSet.add(topic)
-          doc.topics = Array.from(topicsSet)
-          console.log('save topic successfully')
-          doc.save()
+          if (atsMap[userId]) {
+            atsMap[userId] = false
+          }
         }
       })
 
@@ -268,6 +252,31 @@ io.on('connection', function(socket) {
       if (!topicHits[topic]) topicHits[topic] = 0
       topicHits[topic] += 1
     })
+
+    if (tags.length) {
+      // add that topic to user database
+      db_User.findOne({userId: socket.userId}, function(error, doc) {
+        if (error || !doc) {
+          console.log('failed to add topic to user')
+        } else {
+          let topics = doc.topics,
+              topicsSet = new Set(topics)
+          tags.forEach(topic => topicsSet.add(topic))
+          doc.topics = Array.from(topicsSet)
+          console.log('save topic successfully')
+          doc.save()
+
+          socket.emit('update-my-topics', {userData: doc})
+        }
+      })
+    }
+
+    // send to ats that is not sent
+    for(let userId in atsMap) {
+      if (atsMap[userId]) {
+        socketMap[userId].emit('receive-message', {message, fromId: socket.userId})
+      }
+    }
   })
 
   socket.on("disconnect", function(){

@@ -53,7 +53,7 @@ export default class InputArea extends React.Component {
     } else if (message === '#me') {
       this.props.app.showSelfProfile()
     } else {
-      let arr = message.split(' ')
+      let arr = message.replace('\n', ' ').split(' ')
       if (arr.length === 1 && arr[0][0] === '@') { // @raphael,  search for user
         let userId = arr[0].slice(1)
         if (userId === window.global.userId) {
@@ -65,9 +65,12 @@ export default class InputArea extends React.Component {
         let tags = []
         let ats = []
         for (let i = 0; i < arr.length; i++) {
-          if (arr[i][0] === '@') {
-            ats.push(arr[i].slice(1).toLowerCase())
-          } else if (arr[i][0] === '#') {
+          if (arr[i][0] === '@' && arr[i].length > 1) {
+            let userId = arr[i].slice(1)
+            if (userId !== window.global.userId) { // 防止给 @自己 发送信息。
+              ats.push(userId.toLowerCase())              
+            }
+          } else if (arr[i][0] === '#' && arr[i].length > 1) {
             tags.push(arr[i].slice(1).toLowerCase())
           }
         }
@@ -81,7 +84,7 @@ export default class InputArea extends React.Component {
           }
         } else {
           if (ats.length) {
-
+            socketAPI.sendTopicMessageWithAts(tags, ats, message)
           } else { // 只有 tags, 没有 ats
             socketAPI.sendTopicMessage(tags, message)
           }
@@ -112,6 +115,7 @@ export default class InputArea extends React.Component {
 
   showMarkdownEditor() {
     this.props.app.setState({ showMarkdownEditor: true,
+                              markdownDefaultValue: this.state.message,
                               sendMarkdown: (markdown)=> {
                                 console.log('send markdown', markdown)
                                 this.send(markdown)
