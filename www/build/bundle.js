@@ -86,12 +86,15 @@
 
 	var _apiProfile_apiJs2 = _interopRequireDefault(_apiProfile_apiJs);
 
+	var _apiSocket_apiJs = __webpack_require__(216);
+
+	var _apiSocket_apiJs2 = _interopRequireDefault(_apiSocket_apiJs);
+
 	var _examplesHelpJs = __webpack_require__(213);
 
 	var _examplesHelpJs2 = _interopRequireDefault(_examplesHelpJs);
 
 	window.global = {};
-	var profileDoc = '\n### shd101wyy\n';
 
 	/*
 	React.render(
@@ -129,6 +132,7 @@
 	      _apiUser_apiJs2['default'].checkAuth(function (res) {
 	        if (res && res.success) {
 	          window.global.userId = res.userId;
+	          _apiSocket_apiJs2['default'].userConnect(res.userId);
 	          _this.setState({ userLoggedIn: true });
 	        }
 	      });
@@ -20976,6 +20980,10 @@
 
 	var _apiUser_apiJs2 = _interopRequireDefault(_apiUser_apiJs);
 
+	var _apiSocket_apiJs = __webpack_require__(216);
+
+	var _apiSocket_apiJs2 = _interopRequireDefault(_apiSocket_apiJs);
+
 	var Signin = (function (_React$Component) {
 	  _inherits(Signin, _React$Component);
 
@@ -21091,6 +21099,7 @@
 	      _apiUser_apiJs2['default'].signin(email, password, function (res) {
 	        if (res && res.success) {
 	          window.global.userId = res.userId;
+	          _apiSocket_apiJs2['default'].userConnect(res.userId);
 	          _this.props.app.setState({ showSigninPanel: false, userLoggedIn: true });
 	        } else {
 	          alert('failed to sign in');
@@ -21109,6 +21118,7 @@
 	      _apiUser_apiJs2['default'].signup(email, password, userId, function (res) {
 	        if (res && res.success) {
 	          window.global.userId = userId;
+	          _apiSocket_apiJs2['default'].userConnect(userId);
 	          _this2.props.app.setState({ showSigninPanel: false, userLoggedIn: true });
 	        } else {
 	          alert('failed to sign up');
@@ -26738,6 +26748,30 @@
 	})(_react2['default'].Component);
 
 	exports['default'] = MarkdownEditor;
+	module.exports = exports['default'];
+
+/***/ },
+/* 216 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	if (!window.socket) {
+	  window.socket = io();
+	}
+
+	var socket = window.socket;
+
+	var socketAPI = {
+	  userConnect: function userConnect(userId) {
+	    socket.emit('user-connect', userId);
+	  }
+	};
+
+	exports['default'] = socketAPI;
 	module.exports = exports['default'];
 
 /***/ }

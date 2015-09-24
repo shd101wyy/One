@@ -2,6 +2,7 @@ import React from 'react'
 import {Link} from 'react-router'
 
 import userAPI from '../api/user_api.js'
+import socketAPI from '../api/socket_api.js'
 
 export class Signin extends React.Component {
   constructor(props) {
@@ -80,6 +81,7 @@ export class Signin extends React.Component {
     userAPI.signin(email, password, (res)=>{
       if (res && res.success) {
         window.global.userId = res.userId
+        socketAPI.userConnect(res.userId)
         this.props.app.setState({showSigninPanel: false, userLoggedIn: true})
       } else {
         alert('failed to sign in')
@@ -95,6 +97,7 @@ export class Signin extends React.Component {
     userAPI.signup(email, password, userId, (res)=>{
       if (res && res.success) {
         window.global.userId = userId
+        socketAPI.userConnect(userId)
         this.props.app.setState({showSigninPanel: false, userLoggedIn: true})
       } else {
         alert('failed to sign up')

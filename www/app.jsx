@@ -12,13 +12,11 @@ import MarkdownEditor from './components/markdown_editor.jsx'
 
 import userAPI from './api/user_api.js'
 import profileAPI from './api/profile_api.js'
+import socketAPI from './api/socket_api.js'
 
 import helpDoc from './examples/help.js'
 
 window.global = {}
-let profileDoc = `
-### shd101wyy
-`
 
 /*
 React.render(
@@ -48,6 +46,7 @@ class App extends React.Component {
     userAPI.checkAuth((res)=> {
       if (res && res.success) {
         window.global.userId = res.userId
+        socketAPI.userConnect(res.userId)
         this.setState({userLoggedIn: true})
       }
     })

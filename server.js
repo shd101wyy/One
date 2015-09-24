@@ -7,6 +7,8 @@ let http = require('http').Server(app)
 let session = require('express-session')
 let bodyParser = require('body-parser')
 
+let io = require('socket.io')(http)
+
 
 /**
  * Encrypt string
@@ -139,6 +141,15 @@ app.post('/update_profile_intro', function(req, res) {
       doc.save()
       res.json({success: true})
     }
+  })
+})
+
+// socket.io
+io.on('connection', function(socket) {
+  let socketMap = {} // key is userId, value is socket
+  socket.on('user-connect', function(userId) {
+    console.log('user ' + userId + ' logged in')
+    socketMap[userId] = socket
   })
 })
 
