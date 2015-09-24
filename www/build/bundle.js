@@ -289,12 +289,15 @@
 	        markdown: message,
 	        hideEditButton: true
 	      });
+	      // console.log('show my message', updateUserData)
 
 	      if (updateUserData) {
 	        // get user data
 	        _apiUser_apiJs2['default'].getProfile(window.global.userId, function (res) {
 	          if (res && res.success) {
 	            _this4.setState({ userData: res.data });
+	          } else {
+	            console.log('failed to get user data');
 	          }
 	        });
 	      }
@@ -27016,7 +27019,29 @@
 	        _react2['default'].createElement(
 	          'ul',
 	          { className: 'list-group' },
-	          topics ? topicsList : null
+	          topicsList.length ? topicsList : _react2['default'].createElement(
+	            'div',
+	            null,
+	            'you don\'t have any topics right now ',
+	            _react2['default'].createElement('br', null),
+	            _react2['default'].createElement('br', null),
+	            'you can enter ',
+	            _react2['default'].createElement(
+	              'code',
+	              null,
+	              '#all'
+	            ),
+	            ' to enter the discussion of a topic ',
+	            _react2['default'].createElement('br', null),
+	            _react2['default'].createElement('br', null),
+	            'or ',
+	            _react2['default'].createElement(
+	              'code',
+	              null,
+	              '#all hi there '
+	            ),
+	            ' to post message to that topic'
+	          )
 	        )
 	      );
 	    }

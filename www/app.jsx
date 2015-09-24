@@ -184,12 +184,15 @@ class App extends React.Component {
       markdown: message,
       hideEditButton: true
     })
+    // console.log('show my message', updateUserData)
 
     if (updateUserData) {
       // get user data
       userAPI.getProfile(window.global.userId, (res)=> {
         if (res && res.success) {
           this.setState({userData: res.data})
+        } else {
+          console.log('failed to get user data')
         }
       })
     }

@@ -12,6 +12,7 @@ let io = require('socket.io')(http)
 let socketMap = {} // key is userId, value is socket
 let topicMap = {}  // key is topic-name, value is Set([userId_1, userId_2, ...])
 let hotTopics = [] // top 10 hot topics
+let topicHits = {} // key is topic, value is mentioned times
 
 /**
  * Encrypt string
@@ -52,7 +53,6 @@ let initializeTopics = function() {
       })
 
       console.log('finish initializing topicMap: ', topicMap)
-      startHotTopics()
     }
   })
 }
@@ -60,19 +60,22 @@ let initializeTopics = function() {
 let startHotTopics = function() {
   function getTop() {
     let arr = []
-    for (var key in topicMap) {
-      arr.push([key, topicMap[key].size])
+    for (var key in topicHits) {
+      arr.push([key, topicHits[key]])
     }
     hotTopics = arr.sort((a, b)=> b[1] - a[1]).splice(0, 10) // get top 10
     console.log('hot topics: ', hotTopics)
   }
 
-  setInterval(getTop, 1000 * 60 * 5) // every 5 minutes
+  // setInterval(getTop, 1000 * 60 * 5) // every 5 minutes
+  setInterval(getTop, 1000 * 10) // every 10 seconds
   getTop()
 }
 
 // initialization functions...
 initializeTopics()
+startHotTopics()
+
 
 app.use(session({
   secret: '1234567890QWERTY',
@@ -207,6 +210,8 @@ app.post('/delete_user_topic', function(req, res) {
       res.json({success: true, data: doc})
     }
   })
+
+  topicMap[topic].delete(userId)
 })
 
 // socket.io
@@ -253,6 +258,10 @@ io.on('connection', function(socket) {
           doc.save()
         }
       })
+
+      // increase topic hits
+      if (!topicHits[topic]) topicHits[topic] = 0
+      topicHits[topic] += 1
     })
   })
 

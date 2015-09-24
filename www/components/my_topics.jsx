@@ -37,7 +37,7 @@ export default class MyTopics extends React.Component {
   render() {
     let topics = this.props.app.state.userData.topics
     let topicsList = []
-    
+
     if (topics) {
       for(let i = topics.length - 1; i >= 0; i--) {
         topicsList.push(<TopicItem key={i} app={this.props.app} topic={topics[i]}> </TopicItem>)
@@ -47,7 +47,13 @@ export default class MyTopics extends React.Component {
       <div className="my-topics">
         <div className="heading"> my topics </div>
         <ul className="list-group">
-          {topics? topicsList : null}
+          {topicsList.length ? topicsList :
+            <div>
+            you don't have any topics right now <br/><br/>
+            you can enter <code>#all</code> to enter the discussion of a topic <br/><br/>
+            or <code>#all hi there </code> to post message to that topic
+            </div>
+          }
         </ul>
       </div>
     )
