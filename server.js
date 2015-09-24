@@ -11,7 +11,7 @@ let io = require('socket.io')(http)
 
 let socketMap = {} // key is userId, value is socket
 let topicMap = {}  // key is topic-name, value is Set([userId_1, userId_2, ...])
-
+let hotTopics = [] // top 10 hot topics
 
 /**
  * Encrypt string
@@ -50,9 +50,25 @@ let initializeTopics = function() {
           topicMap[topic].add(userId)
         })
       })
+
       console.log('finish initializing topicMap: ', topicMap)
+      startHotTopics()
     }
   })
+}
+
+let startHotTopics = function() {
+  function getTop() {
+    let arr = []
+    for (var key in topicMap) {
+      arr.push([key, topicMap[key].size])
+    }
+    hotTopics = arr.sort((a, b)=> b[1] - a[1]).splice(0, 10) // get top 10
+    console.log('hot topics: ', hotTopics)
+  }
+
+  setInterval(getTop, 1000 * 60 * 5) // every 5 minutes
+  getTop()
 }
 
 // initialization functions...
@@ -169,6 +185,26 @@ app.post('/update_profile_intro', function(req, res) {
       doc.intro = intro
       doc.save()
       res.json({success: true})
+    }
+  })
+})
+
+// delete topic from user
+app.post('/delete_user_topic', function(req, res) {
+  let post = req.body,
+      userId = post.userId,
+      topic = post.topic
+  db_User.findOne({userId}, function(err, doc) {
+    if (err || !doc) {
+      res.send('null')
+    } else {
+      let topics = doc.topics,
+          index = topics.indexOf(topic)
+      if (index >= 0) {
+        topics.splice(index, 1)
+      }
+      doc.save()
+      res.json({success: true, data: doc})
     }
   })
 })

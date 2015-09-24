@@ -115,6 +115,22 @@ let userAPI = {
         errorFn(res, callback)
       }
     })
+  },
+
+  // delete topic from User
+  // return {success: bool, data: userData}
+  deleteTopic: function(userId, topic, callback) {
+    $.ajax('/delete_user_topic', {
+      type: 'POST',
+      dataType: 'json',
+      data: {userId, topic},
+      success: function(res) {
+        successFn(res, callback)
+      },
+      error: function(res) {
+        errorFn(res, callback)
+      }
+    })
   }
 
 }

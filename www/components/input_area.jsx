@@ -64,9 +64,9 @@ export default class InputArea extends React.Component {
           let ats = []
           for (let i = 0; i < arr.length; i++) {
             if (arr[i][0] === '@') {
-              ats.push(arr[i].slice(1))
+              ats.push(arr[i].slice(1).toLowerCase())
             } else if (arr[i][0] === '#') {
-              tags.push(arr[i].slice(1))
+              tags.push(arr[i].slice(1).toLowerCase())
             }
           }
 

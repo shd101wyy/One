@@ -21,7 +21,7 @@ let socketAPI = {
   sendTopicMessage: function(tags, message) {
     socket.emit('topic-message', tags, message)
 
-    socket.app.showMyMessage(message)
+    socket.app.showMyMessage(message, true)
   }
 }
 
