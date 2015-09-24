@@ -37,7 +37,11 @@
       margin-top: 20px;
       border-left: 1px solid #DFDFDF;
       padding-left: 20px;
-      overflow: scroll;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     .cancel-btn {

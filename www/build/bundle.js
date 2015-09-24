@@ -115,8 +115,9 @@
 	    this.state = {
 	      showSigninPanel: false,
 	      userLoggedIn: false,
-	      showMarkdownEditor: true,
-	      posts: []
+	      showMarkdownEditor: false,
+	      posts: [],
+	      markdownDefaultValue: ''
 	    };
 	  }
 
@@ -137,7 +138,7 @@
 	    value: function render() {
 	      var posts = [];
 	      for (var i = this.state.posts.length - 1; i >= 0; i--) {
-	        posts.push(_react2['default'].createElement(_componentsPost_contentJsx2['default'], { postData: this.state.posts[i] }));
+	        posts.push(_react2['default'].createElement(_componentsPost_contentJsx2['default'], { app: this, postData: this.state.posts[i], key: i }));
 	      }
 
 	      return _react2['default'].createElement(
@@ -162,13 +163,55 @@
 	  }, {
 	    key: 'showSelfProfile',
 	    value: function showSelfProfile() {
+	      var _this2 = this;
+
 	      var posts = this.state.posts;
-	      posts.push({
-	        me: true,
-	        image: window.global.userId + '.jpg',
-	        markdown: _apiProfile_apiJs2['default'].generateProfileContent()
-	      });
-	      this.forceUpdate();
+
+	      // get user profile
+	      if (window.global.userId) {
+	        _apiUser_apiJs2['default'].getProfile(window.global.userId, function (res) {
+	          if (res && res.success) {
+	            // TODO: dont sent out user password
+	            var user = res.data,
+	                postData = {
+	              me: true,
+	              image: window.global.userId + '.jpg',
+	              markdown: user.intro ? user.intro : _apiProfile_apiJs2['default'].generateProfileContent(),
+	              topic: '#me'
+	            };
+	            posts.push(postData);
+	            _this2.forceUpdate();
+	          } else {
+	            alert('failed to retrieve user profile: ' + window.global.userId);
+	          }
+	        });
+	      }
+	    }
+
+	    // show other people's profile
+	  }, {
+	    key: 'showOtherProfile',
+	    value: function showOtherProfile(userId) {
+	      var _this3 = this;
+
+	      var posts = this.state.posts;
+	      if (userId) {
+	        _apiUser_apiJs2['default'].getProfile(userId, function (res) {
+	          if (res && res.success) {
+	            var user = res.data,
+	                postData = {
+	              me: false,
+	              image: userId + '.jpg',
+	              markdown: user.intro ? user.intro : _apiProfile_apiJs2['default'].generateOthersProfileContent(userId),
+	              topic: '@' + userId
+	            };
+	            posts.push(postData);
+	            _this3.forceUpdate();
+	          } else {
+	            alert('failed to retrieve user profile: ' + userId);
+	          }
+	        });
+	      }
 	    }
 
 	    // show helps
@@ -179,7 +222,8 @@
 	      posts.push({
 	        me: false,
 	        image: 'help.jpg',
-	        markdown: _examplesHelpJs2['default']
+	        markdown: _examplesHelpJs2['default'],
+	        topic: 'help'
 	      });
 	      this.forceUpdate();
 	    }
@@ -20616,7 +20660,7 @@
 
 
 	// module
-	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\n.app {\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 6px;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 640px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 64px;\n  height: 64px;\n  border-radius: 6px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  width: 500px;\n  min-height: 200px;\n  padding: 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  border: 1px solid #ABABAB;\n  padding: 30px;\n  border-radius: 6px;\n  margin: 0 auto;\n  margin-top: -10px;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: scroll;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\n.app {\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 6px;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 640px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 64px;\n  height: 64px;\n  border-radius: 6px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  width: 500px;\n  padding: 15px 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  border: 1px solid #ABABAB;\n  padding: 30px;\n  border-radius: 6px;\n  margin: 0 auto;\n  margin-top: -10px;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: auto;\n}\n.markdown-editor .panel .preview::-webkit-scrollbar {\n  display: none;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n", ""]);
 
 	// exports
 
@@ -24916,6 +24960,18 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	var successFn = function successFn(res, callback) {
+	  if (res) {
+	    if (callback) callback(res);else callback(null);
+	  } else if (callback) {
+	    callback(null);
+	  }
+	};
+
+	var errorFn = function errorFn(res, callback) {
+	  if (callback) callback(null);
+	};
+
 	var userAPI = {
 	  checkAuth: function checkAuth(callback) {
 	    $.ajax('/auth', {
@@ -24986,7 +25042,38 @@
 	        if (callback) callback(null);
 	      }
 	    });
+	  },
+
+	  // get user profile
+	  getProfile: function getProfile(userId, callback) {
+	    $.ajax('/get_profile', {
+	      type: 'POST',
+	      dataType: 'json',
+	      data: { userId: userId },
+	      success: function success(res) {
+	        successFn(res, callback);
+	      },
+	      error: function error(res) {
+	        errorFn(res, callback);
+	      }
+	    });
+	  },
+
+	  // update user profile introduction
+	  updateProfileIntroduction: function updateProfileIntroduction(userId, intro, callback) {
+	    $.ajax('/update_profile_intro', {
+	      type: 'POST',
+	      dataType: 'json',
+	      data: { userId: userId, intro: intro },
+	      success: function success(res) {
+	        successFn(res, callback);
+	      },
+	      error: function error(res) {
+	        errorFn(res, callback);
+	      }
+	    });
 	  }
+
 	};
 
 	exports['default'] = userAPI;
@@ -25086,6 +25173,12 @@
 	          });
 	        } else if (message === '#me') {
 	          this.props.app.showSelfProfile();
+	        } else {
+	          var arr = message.split(' ');
+	          if (arr.length === 1 && arr[0][0] === '@') {
+	            // @raphael,  search for user
+	            this.props.app.showOtherProfile(arr[0].slice(1));
+	          }
 	        }
 	      }
 	    }
@@ -25131,6 +25224,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _apiUser_apiJs = __webpack_require__(208);
+
+	var _apiUser_apiJs2 = _interopRequireDefault(_apiUser_apiJs);
+
 	var marked = __webpack_require__(211);
 
 	var PostContent = (function (_React$Component) {
@@ -25142,7 +25239,8 @@
 	    _get(Object.getPrototypeOf(PostContent.prototype), 'constructor', this).call(this, props);
 
 	    this.state = {
-	      imageSrc: 'images/' + this.props.postData.image
+	      imageSrc: 'images/' + this.props.postData.image,
+	      markdown: this.props.postData.markdown
 	    };
 	  }
 
@@ -25153,21 +25251,18 @@
 
 	      var img = new Image();
 	      img.onerror = function () {
-	        console.log('ERROR');
-
 	        // use identicon to generate unique icons for profile img
 	        var data = new Identicon(window.global.userId, 64).toString();
 	        _this.setState({ imageSrc: 'data:image/png;base64,' + data });
 	      };
 	      img.src = this.state.imageSrc;
-	      console.log('ENTER HERE', this.props.postData);
+	      console.log('render post content: ', this.props.postData);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var postData = this.props.postData,
 	          me = postData.me,
-	          markdownString = postData.markdown,
 	          htmlContent = postData.htmlContent;
 	      return _react2['default'].createElement(
 	        'div',
@@ -25181,14 +25276,25 @@
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'other-post' },
-	          _react2['default'].createElement('div', { className: 'other-post-content', dangerouslySetInnerHTML: { __html: marked(markdownString) } })
+	          _react2['default'].createElement('div', { className: 'other-post-content', dangerouslySetInnerHTML: { __html: marked(this.state.markdown) } })
 	        )
 	      );
 	    }
 	  }, {
 	    key: 'editPostContent',
 	    value: function editPostContent() {
-	      alert('Edit is not implemented yet');
+	      var _this2 = this;
+
+	      this.props.app.setState({ sendMarkdown: function sendMarkdown(markdown) {
+	          _apiUser_apiJs2['default'].updateProfileIntroduction(window.global.userId, markdown, function (res) {
+	            if (res && res.success) {
+	              _this2.setState({ markdown: markdown });
+	            } else {
+	              alert('failed to update intro');
+	            }
+	          });
+	        } });
+	      this.props.app.setState({ showMarkdownEditor: true, markdownDefaultValue: this.props.postData.markdown });
 	    }
 	  }]);
 
@@ -25202,7 +25308,8 @@
 	  //image: React.PropTypes.string,  // profile image of that user
 	  //markdown: React.PropTypes.string,
 	  // htmlContent: React.PropTypes.html
-	  postData: _react2['default'].PropTypes.object
+	  postData: _react2['default'].PropTypes.object,
+	  app: _react2['default'].PropTypes.object
 	};
 	module.exports = exports['default'];
 
@@ -26507,14 +26614,18 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var profileApi = {
+	var profileAPI = {
 	  generateProfileContent: function generateProfileContent() {
 	    var userId = window.global.userId;
 	    return "\n## " + userId + " (<code>#me</code>)\n---\n* Hello **" + userId + "**, this is your profile card.\n* You can click the **pencil icon** on the right side below your profile picture to edit this profile card.\n";
+	  },
+
+	  generateOthersProfileContent: function generateOthersProfileContent(userId) {
+	    return "\n## " + userId + "\n---\n" + userId + " doesn't have his profile card set up yet, @ him to message him.  \n<code>@" + userId + " please set up your profile card by typing '#me'</code>\n";
 	  }
 	};
 
-	exports["default"] = profileApi;
+	exports["default"] = profileAPI;
 	module.exports = exports["default"];
 
 /***/ },
@@ -26577,9 +26688,11 @@
 
 	      this.markdownEditor = CodeMirror.fromTextArea(document.getElementById('markdown-editor'), {
 	        lineNumbers: true,
-	        mode: 'markdown',
-	        value: ''
+	        mode: 'markdown'
 	      });
+	      this.markdownEditor.setValue(this.props.app.state.markdownDefaultValue);
+	      this.setState({ content: this.props.app.state.markdownDefaultValue });
+
 	      this.markdownEditor.on('change', function () {
 	        _this.setState({ content: _this.markdownEditor.getValue() });
 	      });
@@ -26602,11 +26715,17 @@
 	          ),
 	          _react2['default'].createElement(
 	            'button',
-	            { className: 'btn send-btn' },
+	            { className: 'btn send-btn', onClick: this.send.bind(this) },
 	            ' send '
 	          )
 	        )
 	      );
+	    }
+	  }, {
+	    key: 'send',
+	    value: function send() {
+	      this.props.app.state.sendMarkdown(this.markdownEditor.getValue());
+	      this.props.app.setState({ showMarkdownEditor: false });
 	    }
 	  }, {
 	    key: 'closePanel',

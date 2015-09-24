@@ -49,6 +49,11 @@ export default class InputArea extends React.Component {
         })
       } else if (message === '#me') {
         this.props.app.showSelfProfile()
+      } else {
+        let arr = message.split(' ')
+        if (arr.length === 1 && arr[0][0] === '@') { // @raphael,  search for user
+          this.props.app.showOtherProfile(arr[0].slice(1))
+        }
       }
     }
   }

@@ -111,6 +111,37 @@ app.get('/images/:image_name', function(req, res) {
   res.sendFile(__dirname + '/images/' + req.params.image_name)
 })
 
+// send user profile data
+app.post('/get_profile', function(req, res) {
+  let post = req.body,
+      userId = post.userId
+  db_User.find({userId}, function(error, users) {
+    if (error || !users || !users.length) {
+      res.send('null')
+    } else {
+      res.json({success: true, data: users[0]})
+    }
+  })
+})
+
+// update user profile intro
+app.post('/update_profile_intro', function(req, res) {
+  console.log('update profile intro', req.body)
+  let post = req.body,
+      userId = post.userId,
+      intro = post.intro
+  console.log('update profile intro', post)
+  db_User.findOne({userId}, function(err, doc) {
+    if (err || !doc) {
+      res.send('null')
+    } else {
+      doc.intro = intro
+      doc.save()
+      res.json({success: true})
+    }
+  })
+})
+
 http.listen(31000, function(){
   console.log('listening on *:31000')
 })

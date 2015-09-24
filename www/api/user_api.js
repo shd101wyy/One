@@ -1,3 +1,16 @@
+let successFn = (res, callback)=> {
+  if (res) {
+    if (callback) callback(res)
+    else callback(null)
+  } else if (callback) {
+    callback(null)
+  }
+}
+
+let errorFn = (res, callback)=> {
+  if (callback) callback(null)
+}
+
 let userAPI = {
   checkAuth: function(callback) {
     $.ajax('/auth', {
@@ -72,7 +85,38 @@ let userAPI = {
         if (callback) callback(null)
       }
     })
+  },
+
+  // get user profile
+  getProfile: function(userId, callback) {
+    $.ajax('/get_profile', {
+      type: 'POST',
+      dataType: 'json',
+      data: {userId},
+      success: function(res) {
+        successFn(res, callback)
+      },
+      error: function(res) {
+        errorFn(res, callback)
+      }
+    })
+  },
+
+  // update user profile introduction
+  updateProfileIntroduction: function(userId, intro, callback) {
+    $.ajax('/update_profile_intro', {
+      type: 'POST',
+      dataType: 'json',
+      data: {userId, intro},
+      success: function(res) {
+        successFn(res, callback)
+      },
+      error: function(res) {
+        errorFn(res, callback)
+      }
+    })
   }
+
 }
 
 

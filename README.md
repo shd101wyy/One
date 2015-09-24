@@ -1,4 +1,4 @@
-# One(temp) is a topic based social applicaation
+# One(temp) (Topit) is a topic based social applicaation
 ---
 #### I (*Yiyi*) wrote this application when I felt extremely unhappy on September 22nd 2015.
 
@@ -29,6 +29,7 @@
 
 * 一些指令, 如果只输入了 "#help" 等这些后面没有接内容，则是进行搜索。
 
+* 一些特别的指令 例如 #nearby
 ---
 ##### Next @ 功能
 

@@ -1,5 +1,5 @@
-let postApi = {
+let postAPI = {
 
 }
 
-export default postApi
+export default postAPI

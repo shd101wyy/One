@@ -1,32 +1,32 @@
 import React from 'react'
 let marked = require('marked')
 
+import userAPI from '../api/user_api.js'
+
 export default class PostContent extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      imageSrc: 'images/' + this.props.postData.image
+      imageSrc: 'images/' + this.props.postData.image,
+      markdown: this.props.postData.markdown
     }
   }
 
   componentDidMount() {
     let img = new Image()
     img.onerror = ()=> {
-      console.log('ERROR')
-
       // use identicon to generate unique icons for profile img
       let data = new Identicon(window.global.userId, 64).toString()
       this.setState({imageSrc: 'data:image/png;base64,' + data})
     }
     img.src = this.state.imageSrc
-    console.log('ENTER HERE', this.props.postData)
+    console.log('render post content: ', this.props.postData)
   }
 
   render() {
     let postData = this.props.postData,
         me = postData.me,
-        markdownString = postData.markdown,
         htmlContent = postData.htmlContent
     return (
       <div className="post-content">
@@ -37,7 +37,7 @@ export default class PostContent extends React.Component {
           : null}
         </div>
         <div className="other-post">
-          <div className="other-post-content" dangerouslySetInnerHTML={{__html:marked(markdownString)}}>
+          <div className="other-post-content" dangerouslySetInnerHTML={{__html:marked(this.state.markdown)}}>
         </div>
         </div>
       </div>
@@ -45,7 +45,17 @@ export default class PostContent extends React.Component {
   }
 
   editPostContent() {
-    alert('Edit is not implemented yet')
+    this.props.app.setState({sendMarkdown : (markdown)=> {
+      userAPI.updateProfileIntroduction(window.global.userId, markdown, (res)=> {
+        if (res && res.success) {
+          this.setState({markdown})
+        } else {
+          alert('failed to update intro')
+        }
+      })
+
+    }})
+    this.props.app.setState({showMarkdownEditor: true, markdownDefaultValue: this.props.postData.markdown})
   }
 }
 
@@ -54,5 +64,6 @@ PostContent.propTypes = {
   //image: React.PropTypes.string,  // profile image of that user
   //markdown: React.PropTypes.string,
   // htmlContent: React.PropTypes.html
-  postData: React.PropTypes.object
+  postData: React.PropTypes.object,
+  app: React.PropTypes.object
 }

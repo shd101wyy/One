@@ -11,7 +11,7 @@ import PostContent from './components/post_content.jsx'
 import MarkdownEditor from './components/markdown_editor.jsx'
 
 import userAPI from './api/user_api.js'
-import profileApi from './api/profile_api.js'
+import profileAPI from './api/profile_api.js'
 
 import helpDoc from './examples/help.js'
 
@@ -38,8 +38,9 @@ class App extends React.Component {
     this.state = {
       showSigninPanel: false,
       userLoggedIn: false,
-      showMarkdownEditor: true,
-      posts: []
+      showMarkdownEditor: false,
+      posts: [],
+      markdownDefaultValue: ''
     }
   }
 
@@ -55,7 +56,7 @@ class App extends React.Component {
   render() {
     let posts = []
     for(var i = this.state.posts.length - 1; i >=0; i--) {
-      posts.push(<PostContent postData={this.state.posts[i]}></PostContent>)
+      posts.push(<PostContent app={this} postData={this.state.posts[i]} key={i}></PostContent>)
     }
 
     return (
@@ -87,12 +88,48 @@ class App extends React.Component {
   // add self profile
   showSelfProfile() {
     let posts = this.state.posts
-    posts.push({
-      me: true,
-      image: window.global.userId + '.jpg',
-      markdown: profileApi.generateProfileContent()
-    })
-    this.forceUpdate()
+
+    // get user profile
+    if (window.global.userId) {
+      userAPI.getProfile(window.global.userId, (res)=> {
+        if (res && res.success) {
+          // TODO: dont sent out user password
+          let user = res.data,
+              postData = {
+                            me: true,
+                            image: window.global.userId + '.jpg',
+                            markdown: (user.intro ? user.intro : profileAPI.generateProfileContent()),
+                            topic: '#me'
+                          }
+          posts.push(postData)
+          this.forceUpdate()
+        } else {
+          alert('failed to retrieve user profile: ' + window.global.userId)
+        }
+      })
+    }
+  }
+
+  // show other people's profile
+  showOtherProfile(userId) {
+    let posts = this.state.posts
+    if (userId) {
+      userAPI.getProfile(userId, (res)=> {
+        if (res && res.success) {
+          let user = res.data,
+              postData = {
+                me: false,
+                image: userId + '.jpg',
+                markdown: (user.intro ? user.intro : profileAPI.generateOthersProfileContent(userId)),
+                topic: '@'+userId
+              }
+          posts.push(postData)
+          this.forceUpdate()
+        } else {
+          alert('failed to retrieve user profile: ' + userId)
+        }
+      })
+    }
   }
 
   // show helps
@@ -101,7 +138,8 @@ class App extends React.Component {
     posts.push({
       me: false,
       image: 'help.jpg',
-      markdown: helpDoc
+      markdown: helpDoc,
+      topic: 'help'
     })
     this.forceUpdate()
   }

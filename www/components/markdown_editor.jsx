@@ -15,8 +15,10 @@ export default class MarkdownEditor extends React.Component {
       {
         lineNumbers: true,
         mode: 'markdown',
-        value: '',
       })
+    this.markdownEditor.setValue(this.props.app.state.markdownDefaultValue)
+    this.setState({content: this.props.app.state.markdownDefaultValue})
+
     this.markdownEditor.on('change', ()=> {
       this.setState({content: this.markdownEditor.getValue()})
     })
@@ -34,10 +36,15 @@ export default class MarkdownEditor extends React.Component {
         </div>
         <button className="btn cancel-btn" onClick={this.closePanel.bind(this)}> close </button>
 
-        <button className="btn send-btn"> send </button>
+        <button className="btn send-btn" onClick={this.send.bind(this)}> send </button>
       </div>
     </div>
     )
+  }
+
+  send() {
+    this.props.app.state.sendMarkdown(this.markdownEditor.getValue())
+    this.props.app.setState({showMarkdownEditor: false})
   }
 
   closePanel() {
