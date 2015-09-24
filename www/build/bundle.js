@@ -82,6 +82,10 @@
 
 	var _componentsMy_topicsJsx2 = _interopRequireDefault(_componentsMy_topicsJsx);
 
+	var _componentsHot_topicsJsx = __webpack_require__(220);
+
+	var _componentsHot_topicsJsx2 = _interopRequireDefault(_componentsHot_topicsJsx);
+
 	var _apiUser_apiJs = __webpack_require__(211);
 
 	var _apiUser_apiJs2 = _interopRequireDefault(_apiUser_apiJs);
@@ -182,11 +186,7 @@
 	          { className: 'friend-list' },
 	          ' '
 	        ) : null,
-	        this.state.userLoggedIn ? _react2['default'].createElement(
-	          'div',
-	          { className: 'hot-topics' },
-	          ' '
-	        ) : null,
+	        this.state.userLoggedIn ? _react2['default'].createElement(_componentsHot_topicsJsx2['default'], { app: this }) : null,
 	        this.state.userLoggedIn ? _react2['default'].createElement(_componentsMy_topicsJsx2['default'], { app: this }) : null
 	      );
 	    }
@@ -20740,7 +20740,7 @@
 
 
 	// module
-	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.app {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n  margin-bottom: 32px;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 630px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 48px;\n  height: 48px;\n  border-radius: 6px;\n  margin-left: 20px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  position: relative;\n  width: 500px;\n  padding: 15px 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.post-content .other-post-content:after,\n.post-content .other-post-content:before {\n  right: 100%;\n  top: 44px;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n.post-content .other-post-content:after {\n  border-color: rgba(136, 183, 213, 0);\n  border-right-color: #fff;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content:before {\n  border-color: rgba(194, 225, 245, 0);\n  border-right-color: #85C0D0;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content.me:after,\n.post-content .other-post-content.me:before {\n  right: 0;\n  left: 100%;\n}\n.post-content .other-post-content.me:after {\n  border-right: none;\n  border-left-color: #fff;\n}\n.post-content .other-post-content.me:before {\n  border-right: none;\n  border-left-color: #85C0D0;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: auto;\n}\n.markdown-editor .panel .preview::-webkit-scrollbar {\n  display: none;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n.friend-list {\n  width: 100px;\n  height: 90%;\n  position: fixed;\n  top: 20px;\n  right: 20px;\n  background-color: rgba(69, 69, 69, 0.31);\n}\n.hot-topics {\n  position: fixed;\n  top: 20px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  background-color: rgba(69, 69, 69, 0.31);\n}\n.my-topics {\n  position: fixed;\n  top: 340px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  padding: 15px 30px;\n  border-radius: 6px;\n  background-color: #fff;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.my-topics .heading {\n  font-size: 16px;\n  color: #FF8400;\n  font-weight: 500;\n  margin-bottom: 20px;\n}\n.my-topics .list-group {\n  height: 200px;\n  overflow-y: scroll;\n}\n.my-topics .list-group::-webkit-scrollbar {\n  display: none;\n}\n.my-topics .list-group .badge {\n  cursor: pointer;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.app {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n  margin-bottom: 32px;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 630px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 48px;\n  height: 48px;\n  border-radius: 6px;\n  margin-left: 20px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  position: relative;\n  width: 500px;\n  padding: 15px 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.post-content .other-post-content:after,\n.post-content .other-post-content:before {\n  right: 100%;\n  top: 44px;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n.post-content .other-post-content:after {\n  border-color: rgba(136, 183, 213, 0);\n  border-right-color: #fff;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content:before {\n  border-color: rgba(194, 225, 245, 0);\n  border-right-color: #85C0D0;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content.me:after,\n.post-content .other-post-content.me:before {\n  right: 0;\n  left: 100%;\n}\n.post-content .other-post-content.me:after {\n  border-right: none;\n  border-left-color: #fff;\n}\n.post-content .other-post-content.me:before {\n  border-right: none;\n  border-left-color: #85C0D0;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  padding-bottom: 100px;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  display: block;\n  margin-top: -40px;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: auto;\n}\n.markdown-editor .panel .preview::-webkit-scrollbar {\n  display: none;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n.friend-list {\n  width: 100px;\n  height: 90%;\n  position: fixed;\n  top: 20px;\n  right: 20px;\n  background-color: rgba(69, 69, 69, 0.31);\n}\n.hot-topics {\n  position: fixed;\n  top: 20px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  padding: 15px 30px;\n  border-radius: 6px;\n  background-color: #fff;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.hot-topics .heading {\n  font-size: 16px;\n  color: #FF8400;\n  font-weight: 500;\n  margin-bottom: 20px;\n  border-bottom: 1px solid #F6E9E9;\n  padding-bottom: 10px;\n}\n.hot-topics .badge {\n  background-color: #40BFDA;\n  color: #fff;\n}\n.hot-topics .badge.number1 {\n  background-color: #F1B34F;\n}\n.hot-topics .badge.number2 {\n  background-color: #FD7575;\n}\n.my-topics {\n  position: fixed;\n  top: 340px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  padding: 15px 30px;\n  border-radius: 6px;\n  background-color: #fff;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.my-topics .heading {\n  font-size: 16px;\n  color: #FF8400;\n  font-weight: 500;\n  margin-bottom: 20px;\n  border-bottom: 1px solid #F6E9E9;\n  padding-bottom: 10px;\n}\n.my-topics .list-group {\n  height: 200px;\n  overflow-y: scroll;\n}\n.my-topics .list-group::-webkit-scrollbar {\n  display: none;\n}\n.my-topics .list-group .badge {\n  cursor: pointer;\n}\n", ""]);
 
 	// exports
 
@@ -27094,6 +27094,121 @@
 
 	exports["default"] = helpDoc;
 	module.exports = exports["default"];
+
+/***/ },
+/* 220 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var HotTopics = (function (_React$Component) {
+	  _inherits(HotTopics, _React$Component);
+
+	  function HotTopics(props) {
+	    _classCallCheck(this, HotTopics);
+
+	    _get(Object.getPrototypeOf(HotTopics.prototype), 'constructor', this).call(this, props);
+	    this.state = {
+	      hotTopics: []
+	    };
+	  }
+
+	  _createClass(HotTopics, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this = this;
+
+	      var getHotTopics = function getHotTopics() {
+	        $.ajax('/get-hot-topics', {
+	          type: 'GET',
+	          dataType: 'json',
+	          success: function success(res) {
+	            if (res && res.success) {
+	              // console.log(res.data)
+	              _this.setState({ hotTopics: res.data });
+	            }
+	          },
+	          error: function error(res) {
+	            // do nothing
+	          }
+	        });
+	      };
+
+	      getHotTopics();
+	      // setInterval(getHotTopics, 1000 * 60) // update every 1 minute
+	      setInterval(getHotTopics, 1000 * 5); // update every 5 s for test use
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var hotTopics = this.state.hotTopics,
+	          topicsList = [];
+	      if (hotTopics.length) {
+	        topicsList = hotTopics.map(function (data, index) {
+	          var topic = data[0],
+	              hits = data[1];
+	          return _react2['default'].createElement(
+	            'li',
+	            { className: 'list-group-item', key: index },
+	            _react2['default'].createElement(
+	              'span',
+	              { className: 'badge ' + (index === 0 ? 'number1' : index === 1 ? 'number2' : '') },
+	              hits + ' hits'
+	            ),
+	            index + 1 + '. ' + topic
+	          );
+	        });
+	      }
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'hot-topics' },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'heading' },
+	          ' hot topics '
+	        ),
+	        _react2['default'].createElement(
+	          'ul',
+	          { className: 'list-group' },
+	          topicsList.length ? topicsList : _react2['default'].createElement(
+	            'div',
+	            null,
+	            ' 正在努力从服务器搬运 ',
+	            _react2['default'].createElement(
+	              'code',
+	              null,
+	              'hot topics'
+	            ),
+	            ' '
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return HotTopics;
+	})(_react2['default'].Component);
+
+	exports['default'] = HotTopics;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

@@ -214,6 +214,11 @@ app.post('/delete_user_topic', function(req, res) {
   topicMap[topic].delete(userId)
 })
 
+// get hot topics
+app.get('/get-hot-topics', function(req, res) {
+  res.json({success: true, data: hotTopics})
+})
+
 // socket.io
 io.on('connection', function(socket) {
   socket.on('user-connect', function(userId) {
