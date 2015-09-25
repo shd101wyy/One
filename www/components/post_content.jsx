@@ -25,16 +25,20 @@ export default class PostContent extends React.Component {
     }
     img.src = this.state.imageSrc
     console.log('render post content: ', this.props.postData)
+
+    // initialize tooltip
+    $(React.findDOMNode(this.refs.profilePic)).tooltip();
   }
 
   render() {
     let postData = this.props.postData,
         me = postData.me,
-        htmlContent = postData.htmlContent
+        htmlContent = postData.htmlContent,
+        userId = postData.userId
     return (
       <div className="post-content">
         <div className={'profile-pic ' + (me ? 'me' : '')}>
-          <img src={this.state.imageSrc}/>
+          <img src={this.state.imageSrc} data-toggle="tooltip" data-placement="left" title={userId} ref="profilePic"/>
           {me && !this.props.postData.hideEditButton ?
             <i className="fa fa-pencil-square-o" onClick={this.editPostContent.bind(this)}></i>
           : null}

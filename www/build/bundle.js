@@ -82,7 +82,7 @@
 
 	var _componentsMy_topicsJsx2 = _interopRequireDefault(_componentsMy_topicsJsx);
 
-	var _componentsHot_topicsJsx = __webpack_require__(220);
+	var _componentsHot_topicsJsx = __webpack_require__(218);
 
 	var _componentsHot_topicsJsx2 = _interopRequireDefault(_componentsHot_topicsJsx);
 
@@ -90,7 +90,7 @@
 
 	var _apiUser_apiJs2 = _interopRequireDefault(_apiUser_apiJs);
 
-	var _apiProfile_apiJs = __webpack_require__(218);
+	var _apiProfile_apiJs = __webpack_require__(219);
 
 	var _apiProfile_apiJs2 = _interopRequireDefault(_apiProfile_apiJs);
 
@@ -98,7 +98,7 @@
 
 	var _apiSocket_apiJs2 = _interopRequireDefault(_apiSocket_apiJs);
 
-	var _examplesHelpJs = __webpack_require__(219);
+	var _examplesHelpJs = __webpack_require__(220);
 
 	var _examplesHelpJs2 = _interopRequireDefault(_examplesHelpJs);
 
@@ -210,7 +210,8 @@
 	              me: true,
 	              image: window.global.userId + '.jpg',
 	              markdown: user.intro ? user.intro : _apiProfile_apiJs2['default'].generateProfileContent(),
-	              topic: '#me'
+	              topic: '#me',
+	              userId: window.global.userId
 	            };
 	            posts.push(postData);
 	            _this2.forceUpdate();
@@ -236,7 +237,8 @@
 	              me: false,
 	              image: userId + '.jpg',
 	              markdown: user.intro ? user.intro : _apiProfile_apiJs2['default'].generateOthersProfileContent(userId),
-	              topic: '@' + userId
+	              topic: '@' + userId,
+	              userId: userId
 	            };
 	            posts.push(postData);
 	            _this3.forceUpdate();
@@ -256,7 +258,8 @@
 	        me: false,
 	        image: 'help.jpg',
 	        markdown: _examplesHelpJs2['default'],
-	        topic: 'help'
+	        topic: 'help',
+	        userId: 'help'
 	      });
 	      this.forceUpdate();
 	    }
@@ -269,7 +272,8 @@
 	      posts.push({
 	        me: false,
 	        image: fromId + '.jpg',
-	        markdown: message
+	        markdown: message,
+	        userId: fromId
 	      });
 	      this.forceUpdate();
 	    }
@@ -283,7 +287,8 @@
 	        me: true,
 	        image: window.global.userId + '.jpg',
 	        markdown: message,
-	        hideEditButton: true
+	        hideEditButton: true,
+	        userId: window.global.userId
 	      });
 	      // console.log('show my message', updateUserData)
 	      this.forceUpdate();
@@ -20728,7 +20733,7 @@
 
 
 	// module
-	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.app {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n  margin-bottom: 32px;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 630px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 48px;\n  height: 48px;\n  border-radius: 6px;\n  margin-left: 20px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  position: relative;\n  width: 500px;\n  padding: 15px 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.post-content .other-post-content.me {\n  background-color: #b3ffaf;\n}\n.post-content .other-post-content:after,\n.post-content .other-post-content:before {\n  right: 100%;\n  top: 44px;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n.post-content .other-post-content:after {\n  border-color: rgba(136, 183, 213, 0);\n  border-right-color: #fff;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content:before {\n  border-color: rgba(194, 225, 245, 0);\n  border-right-color: #85C0D0;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content.me:after,\n.post-content .other-post-content.me:before {\n  right: 0;\n  left: 100%;\n}\n.post-content .other-post-content.me:after {\n  border-right: none;\n  border-left-color: #b3ffaf;\n}\n.post-content .other-post-content.me:before {\n  border-right: none;\n  border-left-color: #b3ffaf;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  margin-bottom: 64px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  position: fixed;\n  display: block;\n  margin-top: -105px;\n  margin-left: calc(50% - 150px);\n  color: #555;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.input-area .icon-group {\n  position: fixed;\n  bottom: 64px;\n  left: 0;\n  width: 500px;\n  height: 60px;\n  margin-left: 50%;\n  text-align: center;\n}\n.input-area .icon-group .markdown-icon {\n  padding: 6px;\n  margin-left: 206px;\n  margin-top: 14px;\n  background-color: rgba(103, 94, 90, 0.94);\n  border-radius: 16px;\n  color: white;\n  width: 32px;\n  height: 32px;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n  z-index: 99;\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: auto;\n}\n.markdown-editor .panel .preview::-webkit-scrollbar {\n  display: none;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n.friend-list {\n  width: 100px;\n  height: 90%;\n  position: fixed;\n  top: 20px;\n  right: 20px;\n  background-color: rgba(69, 69, 69, 0.31);\n}\n.hot-topics {\n  position: fixed;\n  top: 20px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  padding: 15px 30px;\n  border-radius: 6px;\n  background-color: #fff;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.hot-topics .heading {\n  font-size: 16px;\n  color: #FF8400;\n  font-weight: 500;\n  margin-bottom: 20px;\n  border-bottom: 1px solid #F6E9E9;\n  padding-bottom: 10px;\n}\n.hot-topics .badge {\n  background-color: #40BFDA;\n  color: #fff;\n}\n.hot-topics .badge.number1 {\n  background-color: #F1B34F;\n}\n.hot-topics .badge.number2 {\n  background-color: #FD7575;\n}\n.my-topics {\n  position: fixed;\n  top: 340px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  padding: 15px 30px;\n  border-radius: 6px;\n  background-color: #fff;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.my-topics .heading {\n  font-size: 16px;\n  color: #FF8400;\n  font-weight: 500;\n  margin-bottom: 20px;\n  border-bottom: 1px solid #F6E9E9;\n  padding-bottom: 10px;\n}\n.my-topics .list-group {\n  height: 200px;\n  overflow-y: scroll;\n}\n.my-topics .list-group::-webkit-scrollbar {\n  display: none;\n}\n.my-topics .list-group .badge {\n  cursor: pointer;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  color: #333;\n  font-family: 'Helvetica', 'Arial', sans-serif;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.app {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  background-color: #a0dae7;\n  background-image: linear-gradient(to bottom, #54c8e2 0, #a0dae7 100%);\n}\n.posts {\n  position: relative;\n  width: 80%;\n  height: calc(100% - 160px);\n  margin: 0 auto;\n  overflow-y: scroll;\n}\n.posts::-webkit-scrollbar {\n  display: none;\n}\n.post-content {\n  position: relative;\n  margin-bottom: 32px;\n}\n.post-content .profile-pic {\n  width: 100%;\n  height: 128px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding-left: calc(50% - 350px);\n}\n.post-content .profile-pic.me {\n  right: 0;\n  left: inherit;\n}\n.post-content .profile-pic.me img,\n.post-content .profile-pic.me i {\n  margin-left: 630px;\n}\n.post-content .profile-pic img,\n.post-content .profile-pic i {\n  width: 48px;\n  height: 48px;\n  border-radius: 6px;\n  margin-left: 20px;\n}\n.post-content .profile-pic i {\n  font-size: 24px;\n  margin-top: 14px;\n}\n.post-content .other-post-content {\n  position: relative;\n  width: 500px;\n  padding: 15px 30px;\n  background-color: white;\n  margin: 20px auto;\n  border-radius: 6px;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.post-content .other-post-content.me {\n  background-color: #b3ffaf;\n}\n.post-content .other-post-content:after,\n.post-content .other-post-content:before {\n  right: 100%;\n  top: 44px;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n.post-content .other-post-content:after {\n  border-color: rgba(136, 183, 213, 0);\n  border-right-color: #fff;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content:before {\n  border-color: rgba(194, 225, 245, 0);\n  border-right-color: #85C0D0;\n  border-width: 12px;\n  margin-top: -30px;\n}\n.post-content .other-post-content.me:after,\n.post-content .other-post-content.me:before {\n  right: 0;\n  left: 100%;\n}\n.post-content .other-post-content.me:after {\n  border-right: none;\n  border-left-color: #b3ffaf;\n}\n.post-content .other-post-content.me:before {\n  border-right: none;\n  border-left-color: #b3ffaf;\n}\n.signin {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n}\n.signin .signin-panel {\n  background-color: #FBFBFB;\n  width: 500px;\n  height: 350px;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.signin.taller .signin-panel {\n  height: 410px;\n}\n.signin .form-heading {\n  margin-bottom: 30px;\n  font-size: 22px;\n}\n.signin .form-control {\n  margin-bottom: 16px;\n  height: 48px;\n}\n.signin a {\n  cursor: pointer;\n}\n.signin .switch-panel-btn {\n  float: left;\n  margin-top: 12px;\n}\n.signin .close-panel-btn {\n  float: right;\n  margin-top: 12px;\n}\n.input-area {\n  position: fixed;\n  bottom: 0;\n  text-align: center;\n  width: 100%;\n  margin-left: -15px;\n}\n.input-area input {\n  width: 500px;\n  height: 60px;\n  margin-bottom: 64px;\n  padding-left: 30px;\n  border: none;\n  border-radius: 6px;\n}\n.input-area input:focus {\n  outline-width: medium;\n  outline-color: #4DB3DC;\n}\n.input-area .signin-hint {\n  position: fixed;\n  display: block;\n  margin-top: -105px;\n  margin-left: calc(50% - 150px);\n  color: #555;\n}\n.input-area .signin-hint a {\n  cursor: pointer;\n  font-weight: 500;\n  color: #4FBDBE;\n}\n.input-area .icon-group {\n  position: fixed;\n  bottom: 64px;\n  left: 0;\n  width: 500px;\n  height: 60px;\n  margin-left: 50%;\n  text-align: center;\n}\n.input-area .icon-group .markdown-icon {\n  padding: 6px;\n  margin-left: 206px;\n  margin-top: 14px;\n  background-color: rgba(103, 94, 90, 0.94);\n  border-radius: 16px;\n  color: white;\n  width: 32px;\n  height: 32px;\n}\n.markdown-editor {\n  position: fixed;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  margin-left: -15px;\n  background-color: rgba(53, 53, 53, 0.7);\n  z-index: 99;\n}\n.markdown-editor .panel {\n  position: relative;\n  width: 80%;\n  height: 80%;\n  margin: 0 auto;\n  margin-top: -10px;\n  padding: 30px;\n  padding-top: 0;\n  border-radius: 6px;\n  border: 1px solid #ABABAB;\n}\n.markdown-editor .panel .editor {\n  width: 50%;\n  height: 90%;\n  float: left;\n}\n.markdown-editor .panel .CodeMirror {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n}\n.markdown-editor .panel .preview {\n  width: 50%;\n  height: 90%;\n  float: left;\n  margin-top: 20px;\n  border-left: 1px solid #DFDFDF;\n  padding-left: 20px;\n  overflow: auto;\n}\n.markdown-editor .panel .preview::-webkit-scrollbar {\n  display: none;\n}\n.markdown-editor .panel .cancel-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #FF7070;\n  color: white;\n}\n.markdown-editor .panel .send-btn {\n  float: right;\n  margin-top: 10px;\n  background-color: #63BC93;\n  color: white;\n  margin-right: 20px;\n}\n.friend-list {\n  width: 100px;\n  height: 90%;\n  position: fixed;\n  top: 20px;\n  right: 20px;\n  background-color: rgba(69, 69, 69, 0.31);\n}\n.hot-topics {\n  position: fixed;\n  top: 20px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  padding: 15px 30px;\n  border-radius: 6px;\n  background-color: #fff;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.hot-topics .heading {\n  font-size: 16px;\n  color: #FF8400;\n  font-weight: 500;\n  margin-bottom: 20px;\n  border-bottom: 1px solid #F6E9E9;\n  padding-bottom: 10px;\n}\n.hot-topics .badge {\n  background-color: #40BFDA;\n  color: #fff;\n}\n.hot-topics .badge.number1 {\n  background-color: #F1B34F;\n}\n.hot-topics .badge.number2 {\n  background-color: #FD7575;\n}\n.hot-topics .list-group {\n  height: 200px;\n  overflow-y: scroll;\n}\n.hot-topics .list-group::-webkit-scrollbar {\n  display: none;\n}\n.my-topics {\n  position: fixed;\n  top: 340px;\n  left: 20px;\n  width: 240px;\n  height: 300px;\n  padding: 15px 30px;\n  border-radius: 6px;\n  background-color: #fff;\n  -webkit-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  -moz-box-shadow: 0px 0px 5px 0px #ebe4eb;\n  box-shadow: 0px 0px 5px 0px #b5b0b5;\n}\n.my-topics .heading {\n  font-size: 16px;\n  color: #FF8400;\n  font-weight: 500;\n  margin-bottom: 20px;\n  border-bottom: 1px solid #F6E9E9;\n  padding-bottom: 10px;\n}\n.my-topics .list-group {\n  height: 200px;\n  overflow-y: scroll;\n}\n.my-topics .list-group::-webkit-scrollbar {\n  display: none;\n}\n.my-topics .list-group .badge {\n  cursor: pointer;\n}\n", ""]);
 
 	// exports
 
@@ -25500,20 +25505,24 @@
 	      };
 	      img.src = this.state.imageSrc;
 	      console.log('render post content: ', this.props.postData);
+
+	      // initialize tooltip
+	      $(_react2['default'].findDOMNode(this.refs.profilePic)).tooltip();
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var postData = this.props.postData,
 	          me = postData.me,
-	          htmlContent = postData.htmlContent;
+	          htmlContent = postData.htmlContent,
+	          userId = postData.userId;
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'post-content' },
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'profile-pic ' + (me ? 'me' : '') },
-	          _react2['default'].createElement('img', { src: this.state.imageSrc }),
+	          _react2['default'].createElement('img', { src: this.state.imageSrc, 'data-toggle': 'tooltip', 'data-placement': 'left', title: userId, ref: 'profilePic' }),
 	          me && !this.props.postData.hideEditButton ? _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o', onClick: this.editPostContent.bind(this) }) : null
 	        ),
 	        _react2['default'].createElement(
@@ -27092,43 +27101,6 @@
 
 /***/ },
 /* 218 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var profileAPI = {
-	  generateProfileContent: function generateProfileContent() {
-	    var userId = window.global.userId;
-	    return "\n## " + userId + " (<code>#me</code>)\n---\n* Hello **" + userId + "**, this is your profile card.\n* You can click the **pencil icon** on the right side below your profile picture to edit this profile card.\n";
-	  },
-
-	  generateOthersProfileContent: function generateOthersProfileContent(userId) {
-	    return "\n## " + userId + "\n---\n" + userId + " doesn't have his profile card set up yet, @ him to message him.  \n<code>@" + userId + " please set up your profile card by typing '#me'</code>\n";
-	  }
-	};
-
-	exports["default"] = profileAPI;
-	module.exports = exports["default"];
-
-/***/ },
-/* 219 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var helpDoc = "\n### This is the introduction of this website\n#### This website is still under development, for more information, have a look at  [github](https://github.com/shd101wyy/One).\n---\n  * Here are some very basic instructions.\n    * <code> #help </code> - to get helps(the page you are reading now)\n    * <code> #logout </code> - to logout your account\n\n### How to use this website\n---\nThis website is designed as a social app based on topics.\nEvery message you post will have a topic.\nAnd here are several public topics you can use as a try.\n  * to search a topic, simply type <code>#</code> and topic name, for example\n    * <code>#help</code> will get all posts related to <code>#help</code> topic.\n    * <code>#all</code> will get all posts on this website ordered by post time.\n  * if you want to post a message to <code>#all</code> topic, simplely include <code>#all</code> in your message.\n    * for example <code>#all Today's weather is super good</code> will post this message to <code>#all</code> topic.\n    * for example <code>I like playing #dota2, anyone else wants to play with me tonight </code> will post this message to <code>#dota2</code> topic.\n  * if you didn't include any <code>#</code> topic, what you post will be sent to <code>#your-id</code> topic.\n  * 未来考虑加上类似 微信 的群组功能。\n\nYou can also tag friends in your message.\n  * to search a friend, simply type <code>@your-friend-id</code>, for exmaple\n    * <code>@raphael</code> will search for user with id <code>raphael</code> and you can choose to follow him.\n  * to tag a friend, simply type <code>@your-friend-id</code>, for example\n    * <code>@raphael you are so handsome</code> will send this message to <code>@raphael</code> and raphael will receive this message in his main page at real time.\n  * of course you can also tag multiple friends.\n  * if you tag friends without including the <code>#</code> topic, then your conversation will be private and not shown to public.\n\n### 一些想法\n---\n我想在页面的左边加上实时的热门 topic 。\n我想在页面的右边加上 好友列表 以方便聊天。 \n\n### Who made this\n---\nThis website is initially designed and programmed by **Yiyi Wang** (shd101wyy) from University of Illinois at Urbana Champaign. He made this website right before the midterm as he was feeling extremely unhappy and he didn't want to do anything else except coding.\nSo he locked his door and began to make this website on September 22nd 2015 at 5:12 pm\n";
-
-	exports["default"] = helpDoc;
-	module.exports = exports["default"];
-
-/***/ },
-/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27241,6 +27213,43 @@
 
 	exports['default'] = HotTopics;
 	module.exports = exports['default'];
+
+/***/ },
+/* 219 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var profileAPI = {
+	  generateProfileContent: function generateProfileContent() {
+	    var userId = window.global.userId;
+	    return "\n## " + userId + " (<code>#me</code>)\n---\n* Hello **" + userId + "**, this is your profile card.\n* You can click the **pencil icon** on the right side below your profile picture to edit this profile card.\n";
+	  },
+
+	  generateOthersProfileContent: function generateOthersProfileContent(userId) {
+	    return "\n## " + userId + "\n---\n" + userId + " doesn't have his profile card set up yet, @ him to message him.  \n<code>@" + userId + " please set up your profile card by typing '#me'</code>\n";
+	  }
+	};
+
+	exports["default"] = profileAPI;
+	module.exports = exports["default"];
+
+/***/ },
+/* 220 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var helpDoc = "\n### This is the introduction of this website\n#### This website is still under development, for more information, have a look at  [github](https://github.com/shd101wyy/One).\n---\n  * Here are some very basic instructions.\n    * <code> #help </code> - to get helps(the page you are reading now)\n    * <code> #logout </code> - to logout your account\n\n### How to use this website\n---\nThis website is designed as a social app based on topics.\nEvery message you post will have a topic.\nAnd here are several public topics you can use as a try.\n  * to search a topic, simply type <code>#</code> and topic name, for example\n    * <code>#help</code> will get all posts related to <code>#help</code> topic.\n    * <code>#all</code> will get all posts on this website ordered by post time.\n  * if you want to post a message to <code>#all</code> topic, simplely include <code>#all</code> in your message.\n    * for example <code>#all Today's weather is super good</code> will post this message to <code>#all</code> topic.\n    * for example <code>I like playing #dota2, anyone else wants to play with me tonight </code> will post this message to <code>#dota2</code> topic.\n  * if you didn't include any <code>#</code> topic, what you post will be sent to <code>#your-id</code> topic.\n  * 未来考虑加上类似 微信 的群组功能。\n\nYou can also tag friends in your message.\n  * to search a friend, simply type <code>@your-friend-id</code>, for exmaple\n    * <code>@raphael</code> will search for user with id <code>raphael</code> and you can choose to follow him.\n  * to tag a friend, simply type <code>@your-friend-id</code>, for example\n    * <code>@raphael you are so handsome</code> will send this message to <code>@raphael</code> and raphael will receive this message in his main page at real time.\n  * of course you can also tag multiple friends.\n  * if you tag friends without including the <code>#</code> topic, then your conversation will be private and not shown to public.\n\n### 一些想法\n---\n我想在页面的左边加上实时的热门 topic 。\n我想在页面的右边加上 好友列表 以方便聊天。 \n\n### Who made this\n---\nThis website is initially designed and programmed by **Yiyi Wang** (shd101wyy) from University of Illinois at Urbana Champaign. He made this website right before the midterm as he was feeling extremely unhappy and he didn't want to do anything else except coding.\nSo he locked his door and began to make this website on September 22nd 2015 at 5:12 pm\n";
+
+	exports["default"] = helpDoc;
+	module.exports = exports["default"];
 
 /***/ }
 /******/ ]);

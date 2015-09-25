@@ -120,7 +120,8 @@ class App extends React.Component {
                             me: true,
                             image: window.global.userId + '.jpg',
                             markdown: (user.intro ? user.intro : profileAPI.generateProfileContent()),
-                            topic: '#me'
+                            topic: '#me',
+                            userId: window.global.userId
                           }
           posts.push(postData)
           this.forceUpdate()
@@ -142,7 +143,8 @@ class App extends React.Component {
                 me: false,
                 image: userId + '.jpg',
                 markdown: (user.intro ? user.intro : profileAPI.generateOthersProfileContent(userId)),
-                topic: '@'+userId
+                topic: '@'+userId,
+                userId: userId
               }
           posts.push(postData)
           this.forceUpdate()
@@ -160,7 +162,8 @@ class App extends React.Component {
       me: false,
       image: 'help.jpg',
       markdown: helpDoc,
-      topic: 'help'
+      topic: 'help',
+      userId: 'help'
     })
     this.forceUpdate()
   }
@@ -171,7 +174,8 @@ class App extends React.Component {
     posts.push({
       me: false,
       image: fromId + '.jpg',
-      markdown: message
+      markdown: message,
+      userId: fromId
     })
     this.forceUpdate()
   }
@@ -183,7 +187,8 @@ class App extends React.Component {
       me: true,
       image: window.global.userId + '.jpg',
       markdown: message,
-      hideEditButton: true
+      hideEditButton: true,
+      userId: window.global.userId
     })
     // console.log('show my message', updateUserData)
     this.forceUpdate()
