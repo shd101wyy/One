@@ -236,7 +236,8 @@ io.on('connection', function(socket) {
   socket.on('send-message', function(tags, ats, message) {
     console.log('send-message', tags, ats, message)
 
-    let atsMap = {}
+    let atsMap = {},
+        sentUser = {}
     for(let i = 0; i < ats.length; i++) {
       atsMap[ats[i]] = true
     }
@@ -244,7 +245,8 @@ io.on('connection', function(socket) {
       if (!topicMap[topic]) topicMap[topic] = new Set()
       topicMap[topic].add(socket.userId)
       topicMap[topic].forEach((userId) => {
-        if (userId !== socket.userId) {
+        if (userId !== socket.userId && !sentUser[userId]) {
+          sentUser[userId] = true  // mark that we have sent message to that user
           if (socketMap[userId]) { // userId is online
             socketMap[userId].emit('receive-message', {message, fromId: socket.userId})
           }

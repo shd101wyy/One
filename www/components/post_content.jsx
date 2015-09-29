@@ -20,7 +20,7 @@ export default class PostContent extends React.Component {
     let img = new Image()
     img.onerror = ()=> {
       // use identicon to generate unique icons for profile img
-      let data = new Identicon(window.global.userId, 64).toString()
+      let data = new Identicon(this.props.postData.userId, 48).toString()
       this.setState({imageSrc: 'data:image/png;base64,' + data})
     }
     img.src = this.state.imageSrc

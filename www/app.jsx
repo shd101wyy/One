@@ -11,6 +11,7 @@ import PostContent from './components/post_content.jsx'
 import MarkdownEditor from './components/markdown_editor.jsx'
 import MyTopics from './components/my_topics.jsx'
 import HotTopics from './components/hot_topics.jsx'
+import FriendList from './components/friend_list.jsx'
 
 import userAPI from './api/user_api.js'
 import profileAPI from './api/profile_api.js'
@@ -96,7 +97,7 @@ class App extends React.Component {
 
       {this.state.showMarkdownEditor ? <MarkdownEditor app={this} /> : null}
 
-      {this.state.userLoggedIn ? <div className="friend-list"> </div> : null}
+      {this.state.userLoggedIn ? <FriendList app={this} /> : null}
 
       {this.state.userLoggedIn ? <HotTopics app={this}></HotTopics> : null}
 
