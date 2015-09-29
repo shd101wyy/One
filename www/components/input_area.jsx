@@ -17,9 +17,13 @@ export default class InputArea extends React.Component {
     let userLoggedIn = this.props.app.state.userLoggedIn
     return (
     <div className="input-area">
-      <input type="text" placeholder={ userLoggedIn ? this.state.placeholder : ""} disabled={!userLoggedIn} value={userLoggedIn ? this.state.message : ''} onChange={this.inputMessage.bind(this)}
+      <div className="input-box" data-placeholder={ userLoggedIn ? this.state.placeholder : ""}
+      onInput={this.inputMessage.bind(this)}
       onKeyDown = {this.checkKeyDown.bind(this)}
-      onClick={this.changePlaceholder.bind(this)} />
+      onClick={this.changePlaceholder.bind(this)}
+      contentEditable={userLoggedIn}
+      ref="inputBox">
+      </div>
       {userLoggedIn ?
         <span className="signin-hint"></span>:
         <span className="signin-hint"> you are not logged in yet. <a onClick={this.showLoginPanel.bind(this)}> click me </a> to sign in </span>}
@@ -32,12 +36,14 @@ export default class InputArea extends React.Component {
   }
 
   inputMessage(e) {
-    this.setState({message: e.target.value})
+    // this.setState({message: e.target.value})
+    this.setState({message: this.refs.inputBox.getDOMNode().innerHTML})
   }
 
   send(message=null) {
     message = message || this.state.message.trim()
     this.setState({message: '', placeholder: 'enter your message here.'})
+    $('.input-box').html('')
 
     if (message === '#help') {
       this.props.app.showHelps()
@@ -68,7 +74,7 @@ export default class InputArea extends React.Component {
           if (arr[i][0] === '@' && arr[i].length > 1) {
             let userId = arr[i].slice(1)
             if (userId !== window.global.userId) { // 防止给 @自己 发送信息。
-              ats.push(userId.toLowerCase())              
+              ats.push(userId.toLowerCase())
             }
           } else if (arr[i][0] === '#' && arr[i].length > 1) {
             tags.push(arr[i].slice(1).toLowerCase())
@@ -98,7 +104,6 @@ export default class InputArea extends React.Component {
   }
 
   checkKeyDown(e) {
-    // console.log(e.keyCode)
     // # => 51
     if (e.keyCode === 13) { // press enter key
       this.send()

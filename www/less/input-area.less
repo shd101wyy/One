@@ -5,17 +5,32 @@
   width: 100%;
   margin-left: -15px;
 
-  input {
+  .input-box {
     width: 500px;
     height: 60px;
+    margin: 0 auto;
     margin-bottom: 64px;
+    padding-top: 20px;
     padding-left: 30px;
     border: none;
     border-radius: 6px;
+    background-color: #fff;
+    text-align: left;
+    // font-size: 16px;
 
     &:focus {
       outline-width: medium;
       outline-color: #4DB3DC;
+      outline-style: none;
+    }
+
+    &.placeholder {
+      color: #999;
+    }
+
+    &:empty:not(:focus):before {
+      content:attr(data-placeholder);
+      color: #999;
     }
   }
 

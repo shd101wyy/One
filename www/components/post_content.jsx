@@ -38,7 +38,7 @@ export default class PostContent extends React.Component {
     return (
       <div className="post-content">
         <div className={'profile-pic ' + (me ? 'me' : '')}>
-          <img src={this.state.imageSrc} data-toggle="tooltip" data-placement="left" title={userId} ref="profilePic"/>
+          <img src={this.state.imageSrc} data-toggle="tooltip" data-placement={me ? 'right' : 'left'} title={userId} ref="profilePic"/>
           {me && !this.props.postData.hideEditButton ?
             <i className="fa fa-pencil-square-o" onClick={this.editPostContent.bind(this)}></i>
           : null}
